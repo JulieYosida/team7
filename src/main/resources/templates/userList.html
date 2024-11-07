@@ -8,7 +8,7 @@
         // ユーザ一覧を表示する関数
         async function fetchUsers() {
             try {
-                const response = await fetch('/api/users');
+                const response = await fetch('/api/users/list'); // 修正したエンドポイント
                 const users = await response.json();
 
                 // ユーザがいない場合
@@ -17,16 +17,28 @@
                     return;
                 }
 
-                // ユーザ一覧のHTMLを作成
-                let userListHTML = '<ul>';
+                // ユーザ一覧のHTMLを作成（表形式）
+                let userListHTML = `
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>メール</th>
+                                <th>名前</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
                 users.forEach(user => {
                     userListHTML += `
-                        <li>
-                            ID: ${user.id}, メール: ${user.email}, 名前: ${user.name}
-                        </li>
+                        <tr>
+                            <td>${user.id}</td>
+                            <td>${user.email}</td>
+                            <td>${user.name}</td>
+                        </tr>
                     `;
                 });
-                userListHTML += '</ul>';
+                userListHTML += '</tbody></table>';
 
                 // ユーザ一覧を表示
                 document.getElementById('userList').innerHTML = userListHTML;

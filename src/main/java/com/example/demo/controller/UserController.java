@@ -28,8 +28,8 @@ public class UserController {
         return ResponseEntity.ok("User created successfully");
     }
 
-    // ユーザ一覧を取得するためのGETリクエスト
-    @GetMapping
+    // ユーザ一覧を取得するためのGETリクエスト（/listというパスに変更）
+    @GetMapping("/list")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
