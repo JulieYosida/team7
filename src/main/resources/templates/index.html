@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ユーザ作成</title>
+    <script>
+        async function submitForm() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const name = document.getElementById('name').value;
+
+            const user = {
+                email: email,
+                password: password,
+                name: name
+            };
+
+            // FetchでPOSTリクエストをJSON形式で送信
+            const response = await fetch('/api/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', // JSON形式
+                },
+                body: JSON.stringify(user) // JSON文字列に変換して送信
+            });
+
+            if (response.ok) {
+                alert('ユーザが作成されました');
+            } else {
+                alert('エラーが発生しました');
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>ユーザ作成</h1>
+    <form onsubmit="event.preventDefault(); submitForm();">
+        <label for="email">メールアドレス:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="password">パスワード:</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <label for="name">社員氏名:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <button type="submit">ユーザ作成</button>
+    </form>
+</body>
+</html>
