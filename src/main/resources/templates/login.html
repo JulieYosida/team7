@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+     <style>
+        .error-message {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <form action="/login" method="post">
+        <label for="id">ログインID:</label>
+        <input type="number" id="id" name="id" oninput="checkInputLength(this)" maxlength="17" required>
+        <br>
+        <label for="passwoed">パスワード:</label>
+        <input type="password" id="password" name="password" oninput="checkInputLength(this)" maxlength="17" required>
+
+        <p class="error-message" id="errorMessage"></p>
+
+        <button type="submit">ログイン</button>
+    </form>
+
+    <script>
+        function checkInputLength(inputElement) {
+            var inputValue = inputElement.value;
+            var errorMessage = document.getElementById('errorMessage');
+
+            if (inputValue.length > 16) {
+                inputElement.value = inputValue.slice(0, 16); // 17文字目以降を削除
+                errorMessage.textContent = '文字数が多すぎます。';
+            } else {
+                errorMessage.textContent = '';
+            }
+        }
+    </script>
+</body>
+
+</html>
