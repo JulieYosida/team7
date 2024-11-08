@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ユーザ一覧</title>
+   <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .true {
+            color: blue;  /* trueの場合の文字色 */
+        }
+
+        .false {
+            color: red;   /* falseの場合の文字色 */
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>ユーザ一覧</h1>
+    <table>
+    <thead>
+            <tr>
+                <th>ID</th>
+                <th>Password</th>
+                <th>学生名</th>
+                <th>email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user : ${user}">
+                <td th:text="${user.getId()}"></td>
+                <td th:text="${user.getPassword()}"></td>
+                <td th:text="${user.getName()}"></td>
+                <td th:text="${user.getEmail()}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
