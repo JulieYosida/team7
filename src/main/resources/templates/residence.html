@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>住居・身上確認書</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            border: 1px solid #333;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .note {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .submit-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 1em;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .submit-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>住居・身上確認書</h1>
+
+        <div class="section">
+            <label for="furigana1">フリガナ</label>
+            <input type="text" id="furigana1" name="furigana1">
+
+            <label for="name">氏名</label>
+            <input type="text" id="name" name="name">
+        </div>
+
+        <div class="section">
+            <label for="furigana2">フリガナ</label>
+            <input type="text" id="furigana2" name="furigana2">
+
+            <label for="address">住所</label>
+            <textarea id="address" name="address"></textarea>
+        </div>
+
+        <div class="section">
+            <label for="commute_route">通勤経路</label>
+            <p>上記住所最寄駅から会社（東西線 東陽町駅）までの経路 （駅名、路線名、乗換含む）</p>
+            <textarea id="commute_route" name="commute_route" placeholder="例：船橋 －（JR 総武線）－ 西船橋 －（東京メトロ東西線）－ 東陽町"></textarea>
+        </div>
+
+        <div class="section">
+            <label for="bicycle_use">上記最寄駅まで自転車使用希望の有無（１．あり ２．なし）</label>
+            <input type="text" id="bicycle_use" name="bicycle_use">
+        </div>
+
+        <div class="section">
+            <label for="bus_route">上記最寄駅までバス使用する場合、または自転車が認められない場合の経路 （駅名、バス路線名）</label>
+            <textarea id="bus_route" name="bus_route" placeholder="例：船橋中央市場 －（新京成バス）－ 船橋駅北口"></textarea>
+        </div>
+
+        <div class="section note">
+            <p>注意事項</p>
+            <ul>
+                <li>※ 経路は就業規則に基づいて決定されるため、希望が通らない場合があります</li>
+                <li>※ 通勤経路に自転車の利用を含む場合は「自転車通勤申請書」等の提出が必要です</li>
+                <li>※ バス使用は、最寄バス停から最寄駅まで1.5km 以上ある場合のみ、承認されます</li>
+            </ul>
+        </div>
+
+        <button type="submit" class="submit-button">送信</button>
+    </div>
+</body>
+</html>
