@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>定期券代申請</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            max-width: 600px;
+            margin: auto;
+            padding: 1em;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        label {
+            margin-top: 10px;
+            display: block;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        .total {
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+    <script>
+        function calculateTotalFare() {
+            const busFare = parseFloat(document.getElementById('busFare').value) || 0;
+            const trainFare = parseFloat(document.getElementById('trainFare').value) || 0;
+            const totalFare = busFare + trainFare;
+            document.getElementById('totalFare').value = totalFare.toFixed(2);
+        }
+
+        function validateForm(event) {
+            const busFare = document.getElementById('busFare').value;
+            const trainFare = document.getElementById('trainFare').value;
+
+            // バスか電車のどちらかが入力されているか確認
+            if (!busFare && !trainFare) {
+                alert("バスまたは電車のどちらかの運賃を入力してください。");
+                event.preventDefault(); // フォーム送信を中止
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <h2>定期券代申請フォーム</h2>
+    <form onsubmit="validateForm(event)">
+        <label for="applicationDate">申請日</label>
+        <input type="date" id="applicationDate" name="applicationDate" required>
+
+        <label for="id">ID</label>
+        <input type="text" id="id" name="id" required>
+
+        <label for="name">氏名</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="furigana">フリガナ</label>
+        <input type="text" id="furigana" name="furigana" required>
+
+        <label for="address">現住所</label>
+        <input type="text" id="address" name="address" required>
+
+        <label for="busRoute">バス使用区間</label>
+        <input type="text" id="busRoute" name="busRoute">
+
+        <label for="busPeriod">バス使用期間</label>
+        <input type="text" id="busPeriod" name="busPeriod">
+
+        <label for="busFare">運賃（バス）</label>
+        <input type="number" id="busFare" name="busFare" step="0.01" oninput="calculateTotalFare()">
+
+        <label for="trainRoute">電車使用区間</label>
+        <input type="text" id="trainRoute" name="trainRoute">
+
+        <label for="trainPeriod">電車使用期間</label>
+        <input type="text" id="trainPeriod" name="trainPeriod">
+
+        <label for="trainFare">運賃（電車）</label>
+        <input type="number" id="trainFare" name="trainFare" step="0.01" oninput="calculateTotalFare()">
+
+        <label for="totalFare">運賃総額</label>
+        <input type="text" id="totalFare" name="totalFare" class="total" readonly>
+
+        <button type="submit">申請する</button>
+    </form>
+</body>
+
+</html>
