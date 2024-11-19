@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
         body {
             font-family: Arial, sans-serif;
         }
+
         form {
             max-width: 600px;
             margin: auto;
@@ -15,30 +17,36 @@
             background: #f9f9f9;
             border-radius: 5px;
         }
+
         label {
             margin-top: 10px;
             display: block;
             font-weight: bold;
         }
+
         input[type="text"], input[type="number"], input[type="date"] {
             width: 100%;
             padding: 8px;
             margin-top: 5px;
             box-sizing: border-box;
         }
+
         .checkbox-group {
             margin-top: 5px;
         }
+
         .checkbox-item {
             display: inline-block;
             margin-right: 15px;
         }
+
         .total {
             font-weight: bold;
             color: green;
         }
+
         .other-input {
-            display: none; /* 初期状態では非表示 */
+            display: none;
             margin-top: 10px;
         }
     </style>
@@ -46,14 +54,57 @@
         function toggleOtherInput() {
             const otherCheckbox = document.getElementById('other');
             const otherInput = document.getElementById('otherInput');
-            // 「その他」がチェックされた場合に入力フィールドを表示
             otherInput.style.display = otherCheckbox.checked ? 'block' : 'none';
+        }
+
+        function validateForm(event) {
+            const requiredFields = [
+                { id: 'applicationDate', name: '申請日' },
+                { id: 'id', name: 'ID' },
+                { id: 'name', name: '氏名' },
+                { id: 'furigana', name: 'フリガナ' },
+                { id: 'departureDate', name: '出発日' },
+                { id: 'departureStation', name: '出発駅' },
+                { id: 'destinationStation', name: '出張先最寄り駅' },
+                { id: 'totalFare', name: '運賃総額' },
+            ];
+
+            for (const field of requiredFields) {
+                const value = document.getElementById(field.id).value;
+                if (!value) {
+                    alert(`「${field.name}」を入力してください。`);
+                    document.getElementById(field.id).focus();
+                    event.preventDefault();
+                    return false;
+                }
+            }
+
+            // チェックボックス検証
+            const checkboxes = document.querySelectorAll('input[name="transportation"]:checked');
+            if (checkboxes.length === 0) {
+                alert('使用交通機関を選択してください。');
+                event.preventDefault();
+                return false;
+            }
+
+            // 「その他」が選択されている場合、詳細入力の検証
+            const otherCheckbox = document.getElementById('other');
+            const otherText = document.getElementById('otherText');
+            if (otherCheckbox.checked && !otherText.value.trim()) {
+                alert('「その他」を選択した場合、詳細を入力してください。');
+                otherText.focus();
+                event.preventDefault();
+                return false;
+            }
+
+            return true;
         }
     </script>
 </head>
+
 <body>
     <h2>出張旅費申請フォーム</h2>
-    <form>
+    <form action="checktravel.html" method="get" onsubmit="return validateForm(event);">
         <label for="applicationDate">申請日</label>
         <input type="date" id="applicationDate" name="applicationDate" required>
 
@@ -65,7 +116,7 @@
 
         <label for="furigana">フリガナ</label>
         <input type="text" id="furigana" name="furigana" required>
-        
+
         <label for="departureDate">出発日</label>
         <input type="date" id="departureDate" name="departureDate" required>
 
@@ -99,7 +150,6 @@
             </div>
         </div>
 
-        <!-- その他の交通機関の入力欄 -->
         <div class="other-input" id="otherInput">
             <label for="otherText">その他の交通機関</label>
             <input type="text" id="otherText" name="otherText" placeholder="その他の交通機関を入力">
@@ -111,4 +161,5 @@
         <button type="submit">申請する</button>
     </form>
 </body>
+
 </html>
