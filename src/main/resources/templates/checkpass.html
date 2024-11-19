@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>入力内容の確認</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 1em;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        dl {
+            margin: 0;
+            padding: 0;
+        }
+
+        dt {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        dd {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button.cancel {
+            background-color: #f44336;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>入力内容の確認</h2>
+        <form action="submit.php" method="post">
+            <dl>
+                <dt>申請日</dt>
+                <dd><span id="applicationDate"></span></dd>
+
+                <dt>ID</dt>
+                <dd><span id="id"></span></dd>
+
+                <dt>氏名</dt>
+                <dd><span id="name"></span></dd>
+
+                <dt>フリガナ</dt>
+                <dd><span id="furigana"></span></dd>
+
+                <dt>現住所</dt>
+                <dd><span id="address"></span></dd>
+
+                <dt>バス使用区間</dt>
+                <dd><span id="busRoute"></span></dd>
+
+                <dt>バス使用期間</dt>
+                <dd><span id="busPeriod"></span></dd>
+
+                <dt>運賃（バス）</dt>
+                <dd><span id="busFare"></span></dd>
+
+                <dt>電車使用区間</dt>
+                <dd><span id="trainRoute"></span></dd>
+
+                <dt>電車使用期間</dt>
+                <dd><span id="trainPeriod"></span></dd>
+
+                <dt>運賃（電車）</dt>
+                <dd><span id="trainFare"></span></dd>
+
+                <dt>運賃総額</dt>
+                <dd><span id="totalFare"></span></dd>
+            </dl>
+
+            <div class="buttons">
+                <button type="button" class="cancel" onclick="history.back()">修正する</button>
+                <button type="submit">送信する</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // URLパラメータを取得し、確認ページに表示する
+        const params = new URLSearchParams(window.location.search);
+
+        document.getElementById('applicationDate').textContent = params.get('applicationDate') || '未入力';
+        document.getElementById('id').textContent = params.get('id') || '未入力';
+        document.getElementById('name').textContent = params.get('name') || '未入力';
+        document.getElementById('furigana').textContent = params.get('furigana') || '未入力';
+        document.getElementById('address').textContent = params.get('address') || '未入力';
+        document.getElementById('busRoute').textContent = params.get('busRoute') || '未入力';
+        document.getElementById('busPeriod').textContent = params.get('busPeriod') || '未入力';
+        document.getElementById('busFare').textContent = params.get('busFare') || '0';
+        document.getElementById('trainRoute').textContent = params.get('trainRoute') || '未入力';
+        document.getElementById('trainPeriod').textContent = params.get('trainPeriod') || '未入力';
+        document.getElementById('trainFare').textContent = params.get('trainFare') || '0';
+        document.getElementById('totalFare').textContent = params.get('totalFare') || '0';
+    </script>
+</body>
+
+</html>
