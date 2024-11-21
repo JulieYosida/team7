@@ -4,51 +4,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>定期代申請フォーム</title>
+    <title>定期券代申請</title>
     <link rel="stylesheet" href="../static/css/styles.css">
+    <script>
+        function calculateTotalFare() {
+            const busFare = parseFloat(document.getElementById('busFare').value) || 0;
+            const trainFare = parseFloat(document.getElementById('trainFare').value) || 0;
+            const totalFare = busFare + trainFare;
+            document.getElementById('totalFare').value = totalFare.toFixed(2);
+        }
+
+        function validateForm(event) {
+            const busFare = document.getElementById('busFare').value;
+            const trainFare = document.getElementById('trainFare').value;
+
+            // バスか電車のどちらかが入力されているか確認
+            if (!busFare && !trainFare) {
+                alert("バスまたは電車のどちらかの運賃を入力してください。");
+                event.preventDefault(); // フォーム送信を中止
+            }
+        }
+    </script>
 </head>
 
 <body>
+	<header>
+        
 
     <!-- ナビゲーションバー -->
     <div class="navbar">
-        <a href="route.html">経路探索ページ</a>
-        <a href="applytravel.html">出張代申請ページ</a>
-        <a href="applypass.html">定期代申請ページ</a>
-        <a href="bicycle.html">自転車申請ページ</a>
+        <a href="keiro.html">経路探索ページ</a>
+        <a href="shucchou_dai.html">出張代申請ページ</a>
+        <a href="teiki_dai.html">定期代申請ページ</a>
+        <a href="jitensha.html">自転車申請ページ</a>
     </div>
+    <h1>出張旅費申請フォーム</h1>	
+	</header>
+    <form action="checkpass.html" method="get" onsubmit="validateForm(event)">
+        <label for="applicationDate">申請日</label>
+        <input type="date" id="applicationDate" name="applicationDate" required>
 
-    <!-- 定期代申請フォーム -->
-    <form>
-        <h1>定期代申請フォーム</h1>
-        <label for="application-date">申請日：</label>
-        <input type="date" id="application-date" name="application-date" required>
+        <label for="id">ID</label>
+        <input type="text" id="id" name="id" required>
 
-        <label for="employee-number">社員番号：</label>
-        <input type="text" id="employee-number" name="employee-number" required>
-
-        <label for="name">氏名：</label>
+        <label for="name">氏名</label>
         <input type="text" id="name" name="name" required>
-        
-        <label for="name-furigana">氏名（フリガナ）：</label>
-        <input type="text" id="name-furigana" name="name-furigana" required>
 
-        <label for="station">最寄り駅：</label>
-        <input type="text" id="station" name="station" required>
+        <label for="furigana">フリガナ</label>
+        <input type="text" id="furigana" name="furigana" required>
 
-        <label for="commute-period">通勤期間：</label>
-        <input type="date" id="commute-period-start" name="commute-period-start" required> ～
-        <input type="date" id="commute-period-end" name="commute-period-end" required>
+        <label for="address">現住所</label>
+        <input type="text" id="address" name="address" required>
 
-        <label for="total-fare">運賃総額：</label>
-        <input type="number" id="total-fare" name="total-fare" required>
+        <label for="busRoute">バス使用区間</label>
+        <input type="text" id="busRoute" name="busRoute">
 
-        <label for="ticket-proof">定期券証明書：</label>
-        <input type="file" id="ticket-proof" name="ticket-proof" accept="image/*,application/pdf" required>
+        <label for="busPeriod">バス使用期間</label>
+        <input type="text" id="busPeriod" name="busPeriod">
 
-        <button type="submit">申請する</button>
+        <label for="busFare">運賃（バス）</label>
+        <input type="number" id="busFare" name="busFare" step="0.01" oninput="calculateTotalFare()">
+
+        <label for="trainRoute">電車使用区間</label>
+        <input type="text" id="trainRoute" name="trainRoute">
+
+        <label for="trainPeriod">電車使用期間</label>
+        <input type="text" id="trainPeriod" name="trainPeriod">
+
+        <label for="trainFare">運賃（電車）</label>
+        <input type="number" id="trainFare" name="trainFare" step="0.01" oninput="calculateTotalFare()">
+
+        <label for="totalFare">運賃総額</label>
+        <input type="text" id="totalFare" name="totalFare" class="total" readonly>
+
+        <button type="submit">確認画面へ</button>
     </form>
-
 </body>
 
 </html>
