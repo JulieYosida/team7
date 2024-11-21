@@ -4,162 +4,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>出張旅費申請</title>
+    <title>出張代申請フォーム</title>
     <style>
+        /* 全体の背景色とフォント */
         body {
             font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
         }
 
+        /* ナビゲーションバーのスタイル */
+        .navbar {
+            background-color: #333;
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            margin: 0 10px;
+            display: inline-block;
+            border-radius: 4px;
+        }
+
+        .navbar a:hover {
+            background-color: #575757;
+        }
+
+        /* フォームのスタイル */
         form {
-            max-width: 600px;
-            margin: auto;
-            padding: 1em;
-            background: #f9f9f9;
-            border-radius: 5px;
-        }
-
-        label {
-            margin-top: 10px;
-            display: block;
-            font-weight: bold;
-        }
-
-        input[type="text"], input[type="number"], input[type="date"] {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
             width: 100%;
-            padding: 8px;
-            margin-top: 5px;
+            max-width: 500px;
+            margin: 20px auto;
+        }
+
+        /* タイトルのスタイル */
+        h1 {
+            font-size: 1.6em;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* ラベルと入力フィールドのスタイル */
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
             box-sizing: border-box;
         }
 
-        .checkbox-group {
-            margin-top: 5px;
+        /* 送信ボタンのスタイル */
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
         }
 
-        .checkbox-item {
-            display: inline-block;
-            margin-right: 15px;
-        }
-
-        .total {
-            font-weight: bold;
-            color: green;
-        }
-
-        .other-input {
-            display: none;
-            margin-top: 10px;
+        button[type="submit"]:hover {
+            background-color: #45a049;
         }
     </style>
-    <script>
-        function toggleOtherInput() {
-            const otherCheckbox = document.getElementById('other');
-            const otherInput = document.getElementById('otherInput');
-            otherInput.style.display = otherCheckbox.checked ? 'block' : 'none';
-        }
-
-        function validateForm(event) {
-            const requiredFields = [
-                { id: 'applicationDate', name: '申請日' },
-                { id: 'id', name: 'ID' },
-                { id: 'name', name: '氏名' },
-                { id: 'furigana', name: 'フリガナ' },
-                { id: 'departureDate', name: '出発日' },
-                { id: 'departureStation', name: '出発駅' },
-                { id: 'destinationStation', name: '出張先最寄り駅' },
-                { id: 'totalFare', name: '運賃総額' },
-            ];
-
-            for (const field of requiredFields) {
-                const value = document.getElementById(field.id).value;
-                if (!value) {
-                    alert(`「${field.name}」を入力してください。`);
-                    document.getElementById(field.id).focus();
-                    event.preventDefault();
-                    return false;
-                }
-            }
-
-            // チェックボックス検証
-            const checkboxes = document.querySelectorAll('input[name="transportation"]:checked');
-            if (checkboxes.length === 0) {
-                alert('使用交通機関を選択してください。');
-                event.preventDefault();
-                return false;
-            }
-
-            // 「その他」が選択されている場合、詳細入力の検証
-            const otherCheckbox = document.getElementById('other');
-            const otherText = document.getElementById('otherText');
-            if (otherCheckbox.checked && !otherText.value.trim()) {
-                alert('「その他」を選択した場合、詳細を入力してください。');
-                otherText.focus();
-                event.preventDefault();
-                return false;
-            }
-
-            return true;
-        }
-    </script>
 </head>
 
 <body>
-    <h2>出張旅費申請フォーム</h2>
-    <form action="checktravel.html" method="get" onsubmit="return validateForm(event);">
-        <label for="applicationDate">申請日</label>
-        <input type="date" id="applicationDate" name="applicationDate" required>
 
-        <label for="id">ID</label>
-        <input type="text" id="id" name="id" required>
+    <!-- ナビゲーションバー -->
+    <div class="navbar">
+        <a href="route.html">経路探索ページ</a>
+        <a href="applytravel.html">出張代申請ページ</a>
+        <a href="applypass.html">定期代申請ページ</a>
+        <a href="bicycle.html">自転車申請ページ</a>
+    </div>
 
-        <label for="name">氏名</label>
+    <!-- 出張代申請フォーム -->
+    <form>
+        <h1>出張代申請フォーム</h1>
+        <label for="application-date">申請日：</label>
+        <input type="date" id="application-date" name="application-date" required>
+
+        <label for="employee-number">社員番号：</label>
+        <input type="text" id="employee-number" name="employee-number" required>
+
+        <label for="name">氏名：</label>
         <input type="text" id="name" name="name" required>
+        
+        <label for="name-furigana">氏名（フリガナ）：</label>
+        <input type="text" id="name-furigana" name="name-furigana" required>
 
-        <label for="furigana">フリガナ</label>
-        <input type="text" id="furigana" name="furigana" required>
+        <label for="destination">出張先：</label>
+        <input type="text" id="destination" name="destination" required>
 
-        <label for="departureDate">出発日</label>
-        <input type="date" id="departureDate" name="departureDate" required>
+        <label for="departure-date">出発日：</label>
+        <input type="date" id="departure-date" name="departure-date" required>
 
-        <label for="departureStation">出発駅</label>
-        <input type="text" id="departureStation" name="departureStation" required>
+        <label for="arrival-date">帰着日：</label>
+        <input type="date" id="arrival-date" name="arrival-date" required>
 
-        <label for="destinationStation">出張先最寄り駅</label>
-        <input type="text" id="destinationStation" name="destinationStation" required>
+        <label for="total-fare">運賃総額：</label>
+        <input type="number" id="total-fare" name="total-fare" required>
 
-        <label>使用交通機関</label>
-        <div class="checkbox-group">
-            <div class="checkbox-item">
-                <input type="checkbox" id="train" name="transportation" value="電車">
-                <label for="train">電車</label>
-            </div>
-            <div class="checkbox-item">
-                <input type="checkbox" id="bus" name="transportation" value="バス">
-                <label for="bus">バス</label>
-            </div>
-            <div class="checkbox-item">
-                <input type="checkbox" id="taxi" name="transportation" value="タクシー">
-                <label for="taxi">タクシー</label>
-            </div>
-            <div class="checkbox-item">
-                <input type="checkbox" id="airplane" name="transportation" value="飛行機">
-                <label for="airplane">飛行機</label>
-            </div>
-            <div class="checkbox-item">
-                <input type="checkbox" id="other" name="transportation" value="その他" onchange="toggleOtherInput()">
-                <label for="other">その他</label>
-            </div>
-        </div>
-
-        <div class="other-input" id="otherInput">
-            <label for="otherText">その他の交通機関</label>
-            <input type="text" id="otherText" name="otherText" placeholder="その他の交通機関を入力">
-        </div>
-
-        <label for="totalFare">運賃総額</label>
-        <input type="number" id="totalFare" name="totalFare" step="0.01" required>
+        <label for="ticket-proof">チケット証明書：</label>
+        <input type="file" id="ticket-proof" name="ticket-proof" accept="image/*,application/pdf" required>
 
         <button type="submit">申請する</button>
     </form>
+
 </body>
 
 </html>
