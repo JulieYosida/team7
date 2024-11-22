@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自転車申請 - 入力内容確認</title>
+    <link rel="stylesheet" href="../static/css/check.css">
+</head>
+
+<body>
+
+   <div class="container">
+        <h2>入力内容の確認</h2>
+        <form action="submit.php" method="post">
+            <dl>
+                <dt>申請日</dt>
+                <dd><span id="confirm-application-date"></span></dd>
+
+                <dt>社員番号</dt>
+                <dd><span id="confirm-employee-number"></span></dd>
+
+                <dt>氏名</dt>
+                <dd><span id="confirm-name"></span></dd>
+
+                <dt>フリガナ</dt>
+                <dd><span id="confirm-name-furigana"></span></dd>
+
+                <dt>部署</dt>
+                <dd><span id="confirm-department"></span></dd>
+
+                <dt>住所</dt>
+                <dd><span id="confirm-address"></span></dd>
+
+                <dt>補助金額</dt>
+                <dd><span id="confirm-subsidy-amount"></span></dd>
+
+                <dt>駐輪場契約証明書</dt>
+                <dd><img id="confirm-parking-proof-img" src="" alt="駐輪場契約証明書画像" style="max-width: 100px; max-height: 100px;"></dd>
+
+                <dt>自転車保険証明書</dt>
+                <dd><img id="confirm-insurance-proof-img" src="" alt="自転車保険証明書画像" style="max-width: 100px; max-height: 100px;"></dd>
+            </dl>
+
+            <div class="buttons">
+                <button type="button" class="cancel" onclick="history.back()">修正する</button>
+                <button type="submit">送信する</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // sessionStorageからデータを取得して表示
+        document.getElementById("confirm-application-date").textContent = sessionStorage.getItem("application-date");
+        document.getElementById("confirm-employee-number").textContent = sessionStorage.getItem("employee-number");
+        document.getElementById("confirm-name").textContent = sessionStorage.getItem("name");
+        document.getElementById("confirm-name-furigana").textContent = sessionStorage.getItem("name-furigana");
+        document.getElementById("confirm-department").textContent = sessionStorage.getItem("department");
+        document.getElementById("confirm-address").textContent = sessionStorage.getItem("address");
+        document.getElementById("confirm-subsidy-amount").textContent = sessionStorage.getItem("subsidy-amount");
+
+        // 画像のデータURLを取得して表示
+        const parkingProofImg = sessionStorage.getItem("parking-proof");
+        if (parkingProofImg) {
+            document.getElementById("confirm-parking-proof-img").src = parkingProofImg;
+        }
+
+        const insuranceProofImg = sessionStorage.getItem("insurance-proof");
+        if (insuranceProofImg) {
+            document.getElementById("confirm-insurance-proof-img").src = insuranceProofImg;
+        }
+    </script>
+
+</body>
+
+</html>

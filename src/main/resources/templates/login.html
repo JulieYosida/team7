@@ -1,26 +1,51 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
-     <style>
-        .error-message {
-            color: red;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログイン</title>
+    <link rel="stylesheet" href="../static/css/login.css">
 </head>
 <body>
-    <form action="/login" method="post">
-        <label for="id">ログインID:</label>
-        <input type="number" id="id" name="id" oninput="checkInputLength(this)" maxlength="17" required>
-        <br>
-        <label for="passwoed">パスワード:</label>
-        <input type="password" id="password" name="password" oninput="checkInputLength(this)" maxlength="17" required>
+    <div class="container">
+        <header class="header">
+            <h1>ログイン</h1>
+            
+        </header>
 
-        <p class="error-message" id="errorMessage"></p>
+        <form action="/login" method="post" class="form">
+            <div class="form-section">
+                <label for="id">ログインID</label>
+                <input 
+                    type="number" 
+                    id="id" 
+                    name="id" 
+                    oninput="checkInputLength(this)" 
+                    maxlength="17" 
+                    placeholder="ログインIDを入力してください" 
+                    required>
+            </div>
 
-        <button type="submit">ログイン</button>
-    </form>
+            <div class="form-section">
+                <label for="password">パスワード</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    oninput="checkInputLength(this)" 
+                    maxlength="17" 
+                    placeholder="パスワードを入力してください" 
+                    required>
+            </div>
+
+            <p class="error-message" id="errorMessage"></p>
+
+            <div class="form-actions">
+                <button type="submit" class="submit-button">ログイン</button>
+                <button type="button" class="guest-button" onclick="guestLogin()">ゲストログイン</button>
+            </div>
+        </form>
+    </div>
 
     <script>
         function checkInputLength(inputElement) {
@@ -29,12 +54,16 @@
 
             if (inputValue.length > 16) {
                 inputElement.value = inputValue.slice(0, 16); // 17文字目以降を削除
-                errorMessage.textContent = '文字数が多すぎます。';
+                errorMessage.textContent = '入力が多すぎます。最大16文字です。';
             } else {
                 errorMessage.textContent = '';
             }
         }
+
+        function guestLogin() {
+            // ゲストログインの処理（例：リダイレクトやAPI呼び出しなど）
+            window.location.href = "/guest-dashboard"; // ゲスト用ページへリダイレクト
+        }
     </script>
 </body>
-
 </html>

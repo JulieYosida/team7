@@ -4,78 +4,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>住居・身上確認書</title>
+    <title>住居・身上確認書 - 入力</title>
     <link rel="stylesheet" href="../static/css/styles.css">
 </head>
 
 <body>
     <div class="container">
         <header class="header">
-            <h1>住居・身上確認書</h1>
             <nav class="navbar">
                 <a href="route.html">経路探索ページ</a>
                 <a href="applytravel.html">出張代申請ページ</a>
                 <a href="applypass.html">定期代申請ページ</a>
-                <a href="bicycle.html">自転車申請ページ</a>
+                <a href="applybicycle.html">自転車申請ページ</a>
             </nav>
+            <h1>住居・身上確認書 - 入力フォーム</h1>
         </header>
 
-        <form action="#" method="post">
+        <form action="../templates/checkresidence.html" id="input-form" onsubmit="saveFormData(event)" >
             <div class="form-section">
-                <label for="namefurigana1">フリガナ</label>
-                <input type="text" id="furigana1" name="furigana1" placeholder="フリガナを入力してください" required>
-
-                <label for="name">氏名</label>
-                <input type="text" id="name" name="name" placeholder="氏名を入力してください" required>
+                <h2>基本情報</h2>
+                <label for="furigana1">フリガナ:</label>
+                <input type="text" id="furigana1" name="furigana1" required>
+                <label for="name">氏名:</label>
+                <input type="text" id="name" name="name" required>
             </div>
 
             <div class="form-section">
-                <label for="adsressfurigana">住所フリガナ</label>
-                <input type="text" id="adsressfurigana" name="adsressfurigana" placeholder="フリガナを入力してください" required>
-
-                <label for="address">住所</label>
-                <input type="text" id="address" name="address" placeholder="住所を入力してください" required>
+                <h2>住所情報</h2>
+                <label for="address-furigana">住所フリガナ:</label>
+                <input type="text" id="address-furigana" name="address-furigana" required>
+                <label for="address">住所:</label>
+                <input type="text" id="address" name="address" required>
             </div>
 
             <div class="form-section">
-                <label for="commute_route">通勤経路</label>
-                <p class="description">上記住所最寄駅から会社（東西線 東陽町駅）までの経路 （駅名、路線名、乗換含む）</p>
-                <input type="text" id="commute_route" name="commute_route" placeholder="例：船橋 －（JR 総武線）－ 西船橋 －（東京メトロ東西線）－ 東陽町" required>
-            </div>
-
-            <div class="form-section">
-                <label for="bicycle_use">上記最寄駅まで自転車使用希望の有無</label>
-                <p class="description">以下から選択してください。</p>
-                <div class="radio-group">
-                    <label>
-                        <input type="radio" id="bicycle_use_yes" name="bicycle_use" value="あり" required> あり
-                    </label>
-                    <label>
-                        <input type="radio" id="bicycle_use_no" name="bicycle_use" value="なし"> なし
-                    </label>
-                </div>
-            </div>
-
-            <div class="form-section">
-                <label for="bus_route">バス使用経路</label>
-                <p class="description">上記最寄駅までバス使用する場合、または自転車が認められない場合の経路 （駅名、バス路線名）</p>
-                <input type="text" id="bus_route" name="bus_route" placeholder="例：船橋中央市場 －（新京成バス）－ 船橋駅北口">
-            </div>
-
-            <div class="form-section note">
-                <p class="description">注意事項</p>
-                <ul>
-                    <li>経路は就業規則に基づいて決定されるため、希望が通らない場合があります。</li>
-                    <li>通勤経路に自転車の利用を含む場合は「自転車通勤申請書」等の提出が必要です。</li>
-                    <li>バス使用は、最寄バス停から最寄駅まで1.5km以上ある場合のみ承認されます。</li>
-                </ul>
+                <h2>通勤情報</h2>
+                <label for="commute-route">通勤経路:</label>
+                <input type="text" id="commute-route" name="commute-route" required>
+                <label for="bicycle-use">自転車使用希望:</label>
+                <select id="bicycle-use" name="bicycle-use" required>
+                    <option value="はい">はい</option>
+                    <option value="いいえ">いいえ</option>
+                </select>
+                <label for="bus-route">バス使用経路:</label>
+                <input type="text" id="bus-route" name="bus-route">
             </div>
 
             <div class="form-actions">
-                <button type="submit" class="submit-button">送信</button>
+                <button type="submit" class="submit-button">入力内容確認へ</button>
             </div>
         </form>
     </div>
+
+    <script>
+        // フォームのデータをsessionStorageに保存する関数
+        function saveFormData(event) {
+            event.preventDefault(); // フォームの送信を防止
+
+            // フォームの入力値を取得
+            const furigana1 = document.getElementById("furigana1").value;
+            const name = document.getElementById("name").value;
+            const addressFurigana = document.getElementById("address-furigana").value;
+            const address = document.getElementById("address").value;
+            const commuteRoute = document.getElementById("commute-route").value;
+            const bicycleUse = document.getElementById("bicycle-use").value;
+            const busRoute = document.getElementById("bus-route").value;
+
+            // sessionStorageに保存
+            sessionStorage.setItem("furigana1", furigana1);
+            sessionStorage.setItem("name", name);
+            sessionStorage.setItem("addressfurigana", addressFurigana);
+            sessionStorage.setItem("address", address);
+            sessionStorage.setItem("commute_route", commuteRoute);
+            sessionStorage.setItem("bicycle_use", bicycleUse);
+            sessionStorage.setItem("bus_route", busRoute);
+
+            // 確認画面へ遷移
+            window.location.href = "checkresidence.html";
+        }
+    </script>
 </body>
 
 </html>

@@ -5,44 +5,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>住居・身上確認書 - 確認</title>
-    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="../static/css/check.css">
 </head>
 
 <body>
-    <div class="container">
-        <header class="header">
-            <h1>住居・身上確認書 - 入力内容確認</h1>
-            <nav class="navbar">
-                <a href="route.html">経路探索ページ</a>
-                <a href="applytravel.html">出張代申請ページ</a>
-                <a href="applypass.html">定期代申請ページ</a>
-                <a href="bicycle.html">自転車申請ページ</a>
-            </nav>
-        </header>
 
-        <form action="submit_confirmation.html" method="post">
-            <div class="form-section">
-                <h2>基本情報</h2>
-                <p><strong>フリガナ:</strong> <span id="confirm-furigana1"></span></p>
-                <p><strong>氏名:</strong> <span id="confirm-name"></span></p>
-            </div>
+<div class="container">
+        <h2>入力内容の確認</h2>
+        <form action="submit.php" method="post">
+            <dl>
+				<dt>フリガナ</dt>
+				<dd><span id="confirm-furigana1"></span></dd>
+				
+				<dt>氏名</dt>
+				<dd><span id="confirm-name"></span></dd>
+				
+				<dt>住所フリガナ</dt>
+				<dd><span id="confirm-address-furigana"></span></dd>
+				
+				<dt>住所</dt>
+				<dd><span id="confirm-address"></span></dd>
+				
+				<dt>通勤経路</dt>
+				<dd><span id="confirm-commute-route"></span></dd>
+				
+				<dt>自転車使用希望</dt>
+				<dd><span id="confirm-bicycle-use"></span></dd>
+				
+				<dt>バス使用経路</dt>
+				<dd><span id="confirm-bus-route"></span></dd>
+            </dl>
 
-            <div class="form-section">
-                <h2>住所情報</h2>
-                <p><strong>住所フリガナ:</strong> <span id="confirm-address-furigana"></span></p>
-                <p><strong>住所:</strong> <span id="confirm-address"></span></p>
-            </div>
-
-            <div class="form-section">
-                <h2>通勤情報</h2>
-                <p><strong>通勤経路:</strong> <span id="confirm-commute-route"></span></p>
-                <p><strong>自転車使用希望:</strong> <span id="confirm-bicycle-use"></span></p>
-                <p><strong>バス使用経路:</strong> <span id="confirm-bus-route"></span></p>
-            </div>
-
-            <div class="form-actions">
-                <button type="button" onclick="history.back()" class="back-button">戻る</button>
-                <button type="submit" class="submit-button">送信確定</button>
+            <div class="buttons">
+                <button type="button" class="cancel" onclick="history.back()">修正する</button>
+                <button type="submit">送信する</button>
             </div>
         </form>
     </div>
@@ -51,7 +47,7 @@
         // 入力内容を取得して表示
         document.getElementById("confirm-furigana1").textContent = sessionStorage.getItem("furigana1");
         document.getElementById("confirm-name").textContent = sessionStorage.getItem("name");
-        document.getElementById("confirm-address-furigana").textContent = sessionStorage.getItem("adsressfurigana");
+        document.getElementById("confirm-address-furigana").textContent = sessionStorage.getItem("addressfurigana");
         document.getElementById("confirm-address").textContent = sessionStorage.getItem("address");
         document.getElementById("confirm-commute-route").textContent = sessionStorage.getItem("commute_route");
         document.getElementById("confirm-bicycle-use").textContent = sessionStorage.getItem("bicycle_use");

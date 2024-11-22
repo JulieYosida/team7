@@ -33,12 +33,12 @@
 
     <!-- ナビゲーションバー -->
     <div class="navbar">
-        <a href="keiro.html">経路探索ページ</a>
-        <a href="shucchou_dai.html">出張代申請ページ</a>
-        <a href="teiki_dai.html">定期代申請ページ</a>
-        <a href="jitensha.html">自転車申請ページ</a>
-    </div>
-    <h1>出張旅費申請フォーム</h1>	
+            <a href="route.html">経路探索</a>
+            <a href="applytravel.html">出張代申請</a>
+            <a href="applypass.html"class="active">定期代申請</a>
+            <a href="applybicycle.html">自転車申請</a>
+        </div>
+    <h1>定期券代申請フォーム</h1>	
 	</header>
     <form action="checkpass.html" method="get" onsubmit="validateForm(event)">
         <label for="applicationDate">申請日</label>
@@ -77,7 +77,7 @@
         <label for="totalFare">運賃総額</label>
         <input type="text" id="totalFare" name="totalFare" class="total" readonly>
 
-        <button type="submit">確認画面へ</button>
+        <button type="submit">入力内容確認へ</button>
     </form>
 </body>
 

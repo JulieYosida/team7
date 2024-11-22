@@ -5,68 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <div class="navbar">
-        <a href="route.html">経路探索ページ</a>
-        <a href="applytravel.html">出張代申請ページ</a>
-        <a href="applypass.html">定期代申請ページ</a>
-        <a href="bicycle.html">自転車申請ページ</a>
-    </div>
+            <a href="route.html" class="active">経路探索</a>
+            <a href="applytravel.html">出張代申請</a>
+            <a href="applypass.html">定期代申請</a>
+            <a href="applybicycle.html">自転車申請</a>
+        </div>
     <title>経路探索モック</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        #map {
-            width: 100%;
-            height: 400px;
-            background-color: #e0e0e0;
-            margin-top: 20px;
-        }
-
-        #directions {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-width: 400px;
-            margin: auto;
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            margin: 10px 0;
-        }
-
-        .input-group label {
-            margin-bottom: 5px;
-        }
-
-        .input-group input {
-            padding: 10px;
-            font-size: 16px;
-        }
-
-        #route {
-            padding: 10px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            text-align: center;
-        }
-
-        #route:hover {
-            background-color: #45a049;
-        }
-
-        #route-output {
-            margin-top: 20px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            background-color: #f9f9f9;
-        }
-    </style>
+    <link rel="stylesheet" href="../static/css/styles.css">
 </head>
 
 <body>

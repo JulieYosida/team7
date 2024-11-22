@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自転車申請フォーム</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+
+<body>
+
+    <header>
+        <!-- ナビゲーションバー -->
+        <div class="navbar">
+            <a href="route.html">経路探索</a>
+            <a href="applytravel.html">出張代申請</a>
+            <a href="applypass.html">定期代申請</a>
+            <a href="applybicycle.html" class="active">自転車申請</a>
+        </div>
+        <h1>自転車申請フォーム</h1>
+    </header>
+
+    <form id="bicycle-form" onsubmit="saveBicycleFormData(event)">
+        <label for="application-date">申請日：</label>
+        <input type="date" id="application-date" name="application-date" required>
+
+        <label for="employee-number">社員番号：</label>
+        <input type="text" id="employee-number" name="employee-number" required>
+
+        <label for="name">氏名：</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="name-furigana">氏名（フリガナ）：</label>
+        <input type="text" id="name-furigana" name="name-furigana" required>
+
+        <label for="department">所属：</label>
+        <input type="text" id="department" name="department" required>
+
+        <label for="address">現住所：</label>
+        <input type="text" id="address" name="address" required>
+
+        <label for="subsidy-amount">支給金額：</label>
+        <input type="number" id="subsidy-amount" name="subsidy-amount" required>
+
+        <label for="parking-proof">駐輪場契約証明書（契約制でない場合は駐輪場住所）：</label>
+        <input type="file" id="parking-proof" name="parking-proof" accept="image/*,application/pdf" required onchange="previewImage(event)">
+
+        <div id="parking-proof-preview">
+            <p>駐輪場契約証明書プレビュー:</p>
+            <img id="parking-proof-img" src="" alt="駐輪場契約証明書画像" style="display: none; max-width: 100px; max-height: 100px;">
+        </div>
+
+        <label for="insurance-proof">自転車保険加入証明書：</label>
+        <input type="file" id="insurance-proof" name="insurance-proof" accept="image/*,application/pdf" required onchange="previewInsuranceImage(event)">
+
+        <div id="insurance-proof-preview">
+            <p>自転車保険証明書プレビュー:</p>
+            <img id="insurance-proof-img" src="" alt="自転車保険証明書画像" style="display: none; max-width: 100px; max-height: 100px;">
+        </div>
+
+        <button type="submit">入力内容確認へ</button>
+    </form>
+
+    <script>
+        // 画像プレビューを表示する関数
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('parking-proof-img');
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // 保険証明書の画像プレビューを表示する関数
+        function previewInsuranceImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('insurance-proof-img');
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // フォームのデータをsessionStorageに保存する関数
+        function saveBicycleFormData(event) {
+            event.preventDefault(); // フォームの送信を防ぐ
+
+            // フォームの入力値を取得
+            const applicationDate = document.getElementById("application-date").value;
+            const employeeNumber = document.getElementById("employee-number").value;
+            const name = document.getElementById("name").value;
+            const nameFurigana = document.getElementById("name-furigana").value;
+            const department = document.getElementById("department").value;
+            const address = document.getElementById("address").value;
+            const subsidyAmount = document.getElementById("subsidy-amount").value;
+            const parkingProof = document.getElementById("parking-proof").value;
+            const insuranceProof = document.getElementById("insurance-proof").value;
+
+            // sessionStorageにデータを保存
+            sessionStorage.setItem("application-date", applicationDate);
+            sessionStorage.setItem("employee-number", employeeNumber);
+            sessionStorage.setItem("name", name);
+            sessionStorage.setItem("name-furigana", nameFurigana);
+            sessionStorage.setItem("department", department);
+            sessionStorage.setItem("address", address);
+            sessionStorage.setItem("subsidy-amount", subsidyAmount);
+            sessionStorage.setItem("parking-proof", parkingProof);
+            sessionStorage.setItem("insurance-proof", insuranceProof);
+
+            // 確認画面に遷移
+            window.location.href = "checkbicycle.html";
+        }
+    </script>
+
+</body>
+
+</html>
