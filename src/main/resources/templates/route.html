@@ -4,19 +4,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <div class="navbar">
-            <a href="route.html" class="active">経路探索</a>
-            <a href="applytravel.html">出張代申請</a>
-            <a href="applypass.html">定期代申請</a>
-            <a href="applybicycle.html">自転車申請</a>
-        </div>
     <title>経路探索モック</title>
     <link rel="stylesheet" href="../static/css/styles.css">
+    <style>
+        
+
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin: 20px 0;
+        }
+
+        #directions {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button#route {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button#route:hover {
+            background-color: #45a049;
+        }
+
+        #map {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #e9ecef;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 16px;
+            color: #666;
+        }
+
+        #route-output {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        #route-info {
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
 </head>
 
 <body>
 
-    <h1 style="text-align: center;">経路探索</h1>
+    <div class="navbar">
+        <a href="route.html" class="active">経路探索</a>
+        <a href="applytravel.html">出張代申請</a>
+        <a href="applypass.html">定期代申請</a>
+        <a href="applybicycle.html">自転車申請</a>
+        <a href="applypass.html">住居・身上登録</a>
+    </div>
+
+    <h1>経路探索</h1>
 
     <div id="directions">
         <div class="input-group">
@@ -33,31 +115,30 @@
     <div id="map">ここに地図が表示されます</div>
 
     <div id="route-output">
-        経路情報: <span id="route-info">ここに経路の詳細が表示されます</span>
+        <span id="route-info">ここに経路の詳細が表示されます</span>
     </div>
 
-  <script>
-    document.getElementById('route').addEventListener('click', function () {
-        const start = document.getElementById('start').value;
-        const end = document.getElementById('end').value;
+    <script>
+        document.getElementById('route').addEventListener('click', function () {
+            const start = document.getElementById('start').value;
+            const end = document.getElementById('end').value;
 
-        if (start && end) {
-            fetch(`http://localhost:8080/api/route?start=${start}&end=${end}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('route-info').textContent = `経路情報: ${data}`;
-                    document.getElementById('map').style.backgroundColor = "#c0ffc0";  // 地図のエリアをハイライト
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert("経路の取得に失敗しました。");
-                });
-        } else {
-            alert("出発地と目的地を入力してください！");
-        }
-    });
-</script>
-
+            if (start && end) {
+                fetch(`http://localhost:8080/api/route?start=${start}&end=${end}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('route-info').textContent = `経路情報: ${data}`;
+                        document.getElementById('map').style.backgroundColor = "#c0ffc0";  // 地図のエリアをハイライト
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert("経路の取得に失敗しました。");
+                    });
+            } else {
+                alert("出発地と目的地を入力してください！");
+            }
+        });
+    </script>
 
 </body>
 
