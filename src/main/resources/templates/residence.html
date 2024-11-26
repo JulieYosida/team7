@@ -4,23 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <title>住居・身上確認書 - 入力</title>
-    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 
 <body>
     <div class="container">
         <header class="header">
             <nav class="navbar">
-                <a href="route.html">経路探索</a>
-                <a href="applytravel.html">出張代申請</a>
-                <a href="applypass.html">定期代申請</a>
-                <a href="applybicycle.html">自転車申請</a>
-                <a href="applypass.html"class="active">住居・身上登録</a>
+                <a th:href="@{/route}">経路探索</a>
+                <a th:href="@{/applytravel}">出張代申請</a>
+                <a th:href="@{/applypass}">定期代申請</a>
+                <a th:href="@{/applybicycle}">自転車申請</a>
+                <a th:href="@{/residence}" class="active">住居・身上登録</a>
             </nav>
             <h1>住居・身上確認書 - 入力フォーム</h1>
         </header>
 
-        <form action="../templates/checkresidence.html" id="input-form" onsubmit="saveFormData(event)" >
+        <form action="/checkresidence" method="POST" id="input-form">
             <div class="form-section">
                 <h2>基本情報</h2>
                 <label for="furigana1">フリガナ:</label>
@@ -32,7 +32,7 @@
             <div class="form-section">
                 <h2>住所情報</h2>
                 <label for="address-furigana">住所フリガナ:</label>
-                <input type="text" id="address-furigana" name="address-furigana" required>
+                <input type="text" id="address-furigana" name="addressFurigana" required>
                 <label for="address">住所:</label>
                 <input type="text" id="address" name="address" required>
             </div>
@@ -40,14 +40,14 @@
             <div class="form-section">
                 <h2>通勤情報</h2>
                 <label for="commute-route">通勤経路:</label>
-                <input type="text" id="commute-route" name="commute-route" required>
+                <input type="text" id="commute-route" name="commuteRoute" required>
                 <label for="bicycle-use">自転車使用希望:</label>
-                <select id="bicycle-use" name="bicycle-use" required>
+                <select id="bicycle-use" name="bicycleUse" required>
                     <option value="はい">はい</option>
                     <option value="いいえ">いいえ</option>
                 </select>
                 <label for="bus-route">バス使用経路:</label>
-                <input type="text" id="bus-route" name="bus-route">
+                <input type="text" id="bus-route" name="busRoute">
             </div>
 
             <div class="form-actions">
@@ -55,34 +55,6 @@
             </div>
         </form>
     </div>
-
-    <script>
-        // フォームのデータをsessionStorageに保存する関数
-        function saveFormData(event) {
-            event.preventDefault(); // フォームの送信を防止
-
-            // フォームの入力値を取得
-            const furigana1 = document.getElementById("furigana1").value;
-            const name = document.getElementById("name").value;
-            const addressFurigana = document.getElementById("address-furigana").value;
-            const address = document.getElementById("address").value;
-            const commuteRoute = document.getElementById("commute-route").value;
-            const bicycleUse = document.getElementById("bicycle-use").value;
-            const busRoute = document.getElementById("bus-route").value;
-
-            // sessionStorageに保存
-            sessionStorage.setItem("furigana1", furigana1);
-            sessionStorage.setItem("name", name);
-            sessionStorage.setItem("addressfurigana", addressFurigana);
-            sessionStorage.setItem("address", address);
-            sessionStorage.setItem("commute_route", commuteRoute);
-            sessionStorage.setItem("bicycle_use", bicycleUse);
-            sessionStorage.setItem("bus_route", busRoute);
-
-            // 確認画面へ遷移
-            window.location.href = "checkresidence.html";
-        }
-    </script>
 </body>
 
 </html>

@@ -5,35 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>住居・身上確認書 - 確認</title>
-    <link rel="stylesheet" href="../static/css/check.css">
+    <link rel="stylesheet" th:href="@{/css/check.css}">
 </head>
 
 <body>
-
-<div class="container">
+    <div class="container">
         <h2>入力内容の確認</h2>
-        <form action="submit.php" method="post">
+        <form action="/submit" method="post">
             <dl>
-				<dt>フリガナ</dt>
-				<dd><span id="confirm-furigana1"></span></dd>
-				
-				<dt>氏名</dt>
-				<dd><span id="confirm-name"></span></dd>
-				
-				<dt>住所フリガナ</dt>
-				<dd><span id="confirm-address-furigana"></span></dd>
-				
-				<dt>住所</dt>
-				<dd><span id="confirm-address"></span></dd>
-				
-				<dt>通勤経路</dt>
-				<dd><span id="confirm-commute-route"></span></dd>
-				
-				<dt>自転車使用希望</dt>
-				<dd><span id="confirm-bicycle-use"></span></dd>
-				
-				<dt>バス使用経路</dt>
-				<dd><span id="confirm-bus-route"></span></dd>
+                <dt>フリガナ</dt>
+                <dd><span th:text="${furigana1}"></span></dd>
+
+                <dt>氏名</dt>
+                <dd><span th:text="${name}"></span></dd>
+
+                <dt>住所フリガナ</dt>
+                <dd><span th:text="${addressFurigana}"></span></dd>
+
+                <dt>住所</dt>
+                <dd><span th:text="${address}"></span></dd>
+
+                <dt>通勤経路</dt>
+                <dd><span th:text="${commuteRoute}"></span></dd>
+
+                <dt>自転車使用希望</dt>
+                <dd><span th:text="${bicycleUse}"></span></dd>
+
+                <dt>バス使用経路</dt>
+                <dd><span th:text="${busRoute}"></span></dd>
             </dl>
 
             <div class="buttons">
@@ -42,17 +41,6 @@
             </div>
         </form>
     </div>
-
-    <script>
-        // 入力内容を取得して表示
-        document.getElementById("confirm-furigana1").textContent = sessionStorage.getItem("furigana1");
-        document.getElementById("confirm-name").textContent = sessionStorage.getItem("name");
-        document.getElementById("confirm-address-furigana").textContent = sessionStorage.getItem("addressfurigana");
-        document.getElementById("confirm-address").textContent = sessionStorage.getItem("address");
-        document.getElementById("confirm-commute-route").textContent = sessionStorage.getItem("commute_route");
-        document.getElementById("confirm-bicycle-use").textContent = sessionStorage.getItem("bicycle_use");
-        document.getElementById("confirm-bus-route").textContent = sessionStorage.getItem("bus_route");
-    </script>
 </body>
 
 </html>

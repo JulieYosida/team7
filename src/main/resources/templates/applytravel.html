@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>出張旅費申請</title>
-    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
     <script>
         function toggleOtherInput() {
             const otherCheckbox = document.getElementById('other');
@@ -62,11 +62,11 @@
 
     <!-- ナビゲーションバー -->
     <div class="navbar">
-            <a href="route.html">経路探索</a>
-            <a href="applytravel.html" class="active">出張代申請</a>
-            <a href="applypass.html">定期代申請</a>
-            <a href="applybicycle.html">自転車申請</a>
-            <a href="applypass.html">住居・身上登録</a>
+            <a th:href="@{/route}">経路探索</a>
+            <a th:href="@{/applytravel}"class="active">出張代申請</a>
+            <a th:href="@{/applypass}">定期代申請</a>
+            <a th:href="@{/applybicycle}">自転車申請</a>
+            <a th:href="@{/residence}">住居・身上登録</a>
         </div>
     <h1>出張旅費申請フォーム</h1>	
 	</header>

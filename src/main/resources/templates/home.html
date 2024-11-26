@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ホーム画面</title>
-    <link rel="stylesheet" href="../static/css/home.css">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
 </head>
 <body>
     <div class="container">
@@ -14,27 +14,27 @@
 
         <main class="main">
             <div class="button-container">
-                <a href="route.html" id="route-search" class="btn">
+                <a th:href="@{/route}" id="route-search" class="btn">
                     <h2 class="btn__title">経路探索</h2>
                     <p class="btn__content">ここでは経路探索を行うことができます。目的地までの最適なルートを見つけましょう。</p>
                 </a>
 
-                <a href="applybicycle.html" id="bicycle-parking" class="btn">
+                <a th:href="@{/applybicycle}" id="bicycle-parking" class="btn">
                     <h2 class="btn__title">自転車駐輪場利用届</h2>
                     <p class="btn__content">自転車駐輪場の利用申請や報告を行うことができます。</p>
                 </a>
 
-                <a href="applypass.html" id="regular-application" class="btn">
+                <a th:href="@{/applypass}" id="regular-application" class="btn">
                     <h2 class="btn__title">定期券代支給申請</h2>
                     <p class="btn__content">定期券の申請や更新を行うことができます。通勤経路の登録もできます。</p>
                 </a>
 
-                <a href="applytravel.html" id="business-trip" class="btn">
+                <a th:href="@{/applytravel}" id="business-trip" class="btn">
                     <h2 class="btn__title">出張代支給申請</h2>
                     <p class="btn__content">出張に関する経費の申請や精算を行うことができます。</p>
                 </a>
 
-                <a href="residence.html" id="residence" class="btn">
+                <a th:href="@{/residence}" id="residence" class="btn">
                     <h2 class="btn__title">住居・身上確認書</h2>
                     <p class="btn__content">住所・通勤情報を提出できます。</p>
                 </a>
