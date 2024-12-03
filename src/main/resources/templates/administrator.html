@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ユーザ一覧</title>
+        <link rel="stylesheet" th:href="@{/css/check.css}">
    <style>
         table {
             border-collapse: collapse;
@@ -39,6 +40,7 @@
                 <th>Password</th>
                 <th>学生名</th>
                 <th>email</th>
+                <th>申請内容</th>
             </tr>
         </thead>
         <tbody>
@@ -47,6 +49,9 @@
                 <td th:text="${user.getPassword()}"></td>
                 <td th:text="${user.getName()}"></td>
                 <td th:text="${user.getEmail()}"></td>
+                <td><form action="/sin" method="post"class="form">
+                    <button type="submit" class="guest-button">申請内容</button>
+                </form></td>
             </tr>
         </tbody>
     </table>

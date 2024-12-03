@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.entity.User;
@@ -22,10 +23,18 @@ public class LoginController {
     public String showLoginForm() {
         return "login";
     }
+    @RequestMapping(path = "/route2", method = RequestMethod.GET)
+    public String route2() {
+        return "route2";
+    }
 
     @RequestMapping(path = "/home", method = RequestMethod.GET)
     public String home() {
         return "home";
+    }
+    @RequestMapping(path = "/complete", method = RequestMethod.GET)
+    public String complete() {
+        return "complete";
     }
 
     @RequestMapping(path = "/applybicycle", method = RequestMethod.GET)
@@ -87,10 +96,63 @@ public class LoginController {
 
         return "checkbicycle";
     }
+    @RequestMapping(path = "/checkpass", method = RequestMethod.POST)
+    public String checkpass(Model model, String applicationDate, String id, String name, String furigana, 
+                                String address, String busRoute, String busPeriod, String busFare, 
+                                String trainRoute, String trainPeriod, String trainFare, String totalFare) {
+        model.addAttribute("applicationDate", applicationDate);
+        model.addAttribute("id", id);
+        model.addAttribute("name", name);
+        model.addAttribute("furigana", furigana);
+        model.addAttribute("address", address);
+        model.addAttribute("busRoute", busRoute);
+        model.addAttribute("busPeriod", busPeriod);
+        model.addAttribute("busFare", busFare);
+        model.addAttribute("trainRoute", trainRoute);
+        model.addAttribute("trainPeriod", trainPeriod);
+        model.addAttribute("trainFare", trainFare);
+        model.addAttribute("totalFare", totalFare);
+        return "checkpass";
+    }
+    @RequestMapping(path = "/checktravel", method = RequestMethod.POST)
+    public String checkTravel(Model model, 
+                              String applicationDate, 
+                              String id, 
+                              String name, 
+                              String furigana,
+                              String departureDate, 
+                              String departureStation, 
+                              String destinationStation, 
+                              String totalFare, 
+                              @RequestParam(value = "transportation", required = false) String[] transportation,
+                              @RequestParam(value = "otherText", required = false) String otherText) {
+        // フォームから送信されたデータをModelに追加
+        model.addAttribute("applicationDate", applicationDate);
+        model.addAttribute("id", id);
+        model.addAttribute("name", name);
+        model.addAttribute("furigana", furigana);
+        model.addAttribute("departureDate", departureDate);
+        model.addAttribute("departureStation", departureStation);
+        model.addAttribute("destinationStation", destinationStation);
+        model.addAttribute("totalFare", totalFare);
+
+        // 選択された交通機関をModelに追加
+        model.addAttribute("transportation", transportation);
+
+        // その他の交通機関が入力されている場合は追加
+        if (otherText != null && !otherText.trim().isEmpty()) {
+            model.addAttribute("otherText", otherText);
+        } else {
+            model.addAttribute("otherText", null);
+        }
+
+        // "checktravel"というテンプレートを返す
+        return "checktravel";
+    }
 
     @RequestMapping(path = "/submitbicycle", method = RequestMethod.POST)
     public String submitBicycle(String furigana1, String name, String addressFurigana, String address, String commuteRoute, String bicycleUse, String busRoute, Model model) {
-        return "redirect:/home";
+        return "redirect:/complete";
     }
     @RequestMapping(path = "/submit", method = RequestMethod.POST)
     public String submitResidence(String furigana1, String name, String addressFurigana, String address, String commuteRoute, String bicycleUse, String busRoute) {
@@ -100,9 +162,33 @@ public class LoginController {
                           furigana1, name, addressFurigana, address, commuteRoute, bicycleUse, busRoute);
 
 
+        return "redirect:/complete";
+    }
+    @RequestMapping(path = "/sin", method = RequestMethod.POST)
+    public String sins() {
+        return "sin";
+    }
+    @RequestMapping(path = "/sins", method = RequestMethod.POST)
+    public String sin() {
+        return "redirect:/sin";
+    }
+    @RequestMapping(path = "/compsubmit", method = RequestMethod.POST)
+    public String compsubmit(Model model) {
+        // ゲストログインの場合の処理を追加
+        // 必要であれば、ゲスト用の情報をModelに追加できます
+        model.addAttribute("message", "入力完了");
+        
         return "redirect:/home";
     }
-
+    @RequestMapping(path = "/guest", method = RequestMethod.POST)
+    public String guestLogin(Model model) {
+        // ゲストログインの場合の処理を追加
+        // 必要であれば、ゲスト用の情報をModelに追加できます
+        model.addAttribute("message", "ゲストとしてログインしました！");
+        
+        // ゲスト用ダッシュボードに遷移
+        return "redirect:/route2";
+    }
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public String processLogin(String id, String password, Model model, HttpSession session) {

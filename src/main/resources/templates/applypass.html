@@ -28,20 +28,19 @@
 </head>
 
 <body>
-	<header>
-        
-
-    <!-- ナビゲーションバー -->
-    <div class="navbar">
+    <header>
+        <!-- ナビゲーションバー -->
+        <div class="navbar">
             <a th:href="@{/route}">経路探索</a>
             <a th:href="@{/applytravel}">出張代申請</a>
-            <a th:href="@{/applypass}"class="active">定期代申請</a>
+            <a th:href="@{/applypass}" class="active">定期代申請</a>
             <a th:href="@{/applybicycle}">自転車申請</a>
             <a th:href="@{/residence}">住居・身上登録</a>
         </div>
-    <h1>定期券代申請フォーム</h1>	
-	</header>
-    <form action="checkpass.html" method="get" onsubmit="validateForm(event)">
+        <h1>定期券代申請フォーム</h1>
+    </header>
+
+    <form action="/checkpass" method="post" onsubmit="validateForm(event)">
         <label for="applicationDate">申請日</label>
         <input type="date" id="applicationDate" name="applicationDate" required>
 

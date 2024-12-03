@@ -5,49 +5,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>入力内容の確認</title>
-    <link rel="stylesheet" th:href="@{/css/check.css}">
+    <link rel="stylesheet" href="/css/check.css">
 </head>
 
 <body>
     <div class="container">
         <h2>入力内容の確認</h2>
-        <form action="submit.php" method="post">
+        <form action="/submit" method="post">
             <dl>
                 <dt>申請日</dt>
-                <dd><span id="applicationDate"></span></dd>
+                <dd><span th:text="${applicationDate}">未入力</span></dd>
 
                 <dt>ID</dt>
-                <dd><span id="id"></span></dd>
+                <dd><span th:text="${id}">未入力</span></dd>
 
                 <dt>氏名</dt>
-                <dd><span id="name"></span></dd>
+                <dd><span th:text="${name}">未入力</span></dd>
 
                 <dt>フリガナ</dt>
-                <dd><span id="furigana"></span></dd>
+                <dd><span th:text="${furigana}">未入力</span></dd>
 
                 <dt>現住所</dt>
-                <dd><span id="address"></span></dd>
+                <dd><span th:text="${address}">未入力</span></dd>
 
                 <dt>バス使用区間</dt>
-                <dd><span id="busRoute"></span></dd>
+                <dd><span th:text="${busRoute}">未入力</span></dd>
 
                 <dt>バス使用期間</dt>
-                <dd><span id="busPeriod"></span></dd>
+                <dd><span th:text="${busPeriod}">未入力</span></dd>
 
                 <dt>運賃（バス）</dt>
-                <dd><span id="busFare"></span></dd>
+                <dd><span th:text="${busFare}">0</span></dd>
 
                 <dt>電車使用区間</dt>
-                <dd><span id="trainRoute"></span></dd>
+                <dd><span th:text="${trainRoute}">未入力</span></dd>
 
                 <dt>電車使用期間</dt>
-                <dd><span id="trainPeriod"></span></dd>
+                <dd><span th:text="${trainPeriod}">未入力</span></dd>
 
                 <dt>運賃（電車）</dt>
-                <dd><span id="trainFare"></span></dd>
+                <dd><span th:text="${trainFare}">0</span></dd>
 
                 <dt>運賃総額</dt>
-                <dd><span id="totalFare"></span></dd>
+                <dd><span th:text="${totalFare}">0</span></dd>
             </dl>
 
             <div class="buttons">
@@ -56,24 +56,6 @@
             </div>
         </form>
     </div>
-
-    <script>
-        // URLパラメータを取得し、確認ページに表示する
-        const params = new URLSearchParams(window.location.search);
-
-        document.getElementById('applicationDate').textContent = params.get('applicationDate') || '未入力';
-        document.getElementById('id').textContent = params.get('id') || '未入力';
-        document.getElementById('name').textContent = params.get('name') || '未入力';
-        document.getElementById('furigana').textContent = params.get('furigana') || '未入力';
-        document.getElementById('address').textContent = params.get('address') || '未入力';
-        document.getElementById('busRoute').textContent = params.get('busRoute') || '未入力';
-        document.getElementById('busPeriod').textContent = params.get('busPeriod') || '未入力';
-        document.getElementById('busFare').textContent = params.get('busFare') || '0';
-        document.getElementById('trainRoute').textContent = params.get('trainRoute') || '未入力';
-        document.getElementById('trainPeriod').textContent = params.get('trainPeriod') || '未入力';
-        document.getElementById('trainFare').textContent = params.get('trainFare') || '0';
-        document.getElementById('totalFare').textContent = params.get('totalFare') || '0';
-    </script>
 </body>
 
 </html>

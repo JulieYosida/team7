@@ -10,9 +10,8 @@
     <div class="container">
         <header class="header">
             <h1>ログイン</h1>
-            
         </header>
-
+				
         <form action="/login" method="post" class="form">
             <div class="form-section">
                 <label for="id">ログインID</label>
@@ -42,9 +41,12 @@
 
             <div class="form-actions">
                 <button type="submit" class="submit-button">ログイン</button>
-                <button type="button" class="guest-button" onclick="guestLogin()">ゲストログイン</button>
+                
             </div>
         </form>
+        <form action="/guest" method="post"class="form">
+                    <button type="submit" class="guest-button">ゲストログイン</button>
+                </form>
     </div>
 
     <script>
@@ -58,11 +60,6 @@
             } else {
                 errorMessage.textContent = '';
             }
-        }
-
-        function guestLogin() {
-            // ゲストログインの処理（例：リダイレクトやAPI呼び出しなど）
-            window.location.href = "/guest-dashboard"; // ゲスト用ページへリダイレクト
         }
     </script>
 </body>
