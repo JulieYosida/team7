@@ -2,14 +2,15 @@ package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.entity.User;
+import com.example.demo.entity.travel;
 import com.example.demo.repository.LoginRepository;
+import com.example.demo.repository.TravelRepository;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -18,6 +19,9 @@ public class LoginController {
 
     @Autowired
     LoginRepository loginRepository;
+    
+    @Autowired
+    TravelRepository TravelRepository;
 
     @RequestMapping(path = "/login", method = RequestMethod.GET)
     public String showLoginForm() {
@@ -56,66 +60,68 @@ public class LoginController {
     public String residence() {
         return "residence";
     }
+
     @RequestMapping(path = "/checkresidence", method = RequestMethod.POST)
-    public String checkResidence(String furigana1, String name, String addressFurigana, String address, String commuteRoute, String bicycleUse, String busRoute, Model model) {
-        model.addAttribute("furigana1", furigana1);
-        model.addAttribute("name", name);
-        model.addAttribute("addressFurigana", addressFurigana);
-        model.addAttribute("address", address);
-        model.addAttribute("commuteRoute", commuteRoute);
-        model.addAttribute("bicycleUse", bicycleUse);
-        model.addAttribute("busRoute", busRoute);
+    public String checkResidence(String furigana1, String name, String addressFurigana, String address, String commuteRoute, String bicycleUse, String busRoute, HttpSession session) {
+        session.setAttribute("furigana1", furigana1);
+        session.setAttribute("name", name);
+        session.setAttribute("addressFurigana", addressFurigana);
+        session.setAttribute("address", address);
+        session.setAttribute("commuteRoute", commuteRoute);
+        session.setAttribute("bicycleUse", bicycleUse);
+        session.setAttribute("busRoute", busRoute);
         return "checkresidence";
     }
+
     @RequestMapping(path = "/checkbicycle", method = RequestMethod.POST)
     public String checkBicycle(String applicationDate, String employeeNumber, String name, String nameFurigana,
                                String department, String address, String subsidyAmount, 
-                               MultipartFile parkingProof, MultipartFile insuranceProof, Model model) {
+                               MultipartFile parkingProof, MultipartFile insuranceProof, HttpSession session) {
 
-        model.addAttribute("applicationDate", applicationDate);
-        model.addAttribute("employeeNumber", employeeNumber);
-        model.addAttribute("name", name);
-        model.addAttribute("nameFurigana", nameFurigana);
-        model.addAttribute("department", department);
-        model.addAttribute("address", address);
-        model.addAttribute("subsidyAmount", subsidyAmount);
+        session.setAttribute("applicationDate", applicationDate);
+        session.setAttribute("employeeNumber", employeeNumber);
+        session.setAttribute("name", name);
+        session.setAttribute("nameFurigana", nameFurigana);
+        session.setAttribute("department", department);
+        session.setAttribute("address", address);
+        session.setAttribute("subsidyAmount", subsidyAmount);
 
-        // parkingProofのファイル名をモデルに追加
         if (parkingProof != null && !parkingProof.isEmpty()) {
-            model.addAttribute("parkingProofFileName", parkingProof.getOriginalFilename());
+            session.setAttribute("parkingProofFileName", parkingProof.getOriginalFilename());
         } else {
-            model.addAttribute("parkingProofFileName", "ファイルがアップロードされていません");
+            session.setAttribute("parkingProofFileName", "ファイルがアップロードされていません");
         }
 
-        // insuranceProofのファイル名をモデルに追加
         if (insuranceProof != null && !insuranceProof.isEmpty()) {
-            model.addAttribute("insuranceProofFileName", insuranceProof.getOriginalFilename());
+            session.setAttribute("insuranceProofFileName", insuranceProof.getOriginalFilename());
         } else {
-            model.addAttribute("insuranceProofFileName", "ファイルがアップロードされていません");
+            session.setAttribute("insuranceProofFileName", "ファイルがアップロードされていません");
         }
 
         return "checkbicycle";
     }
+
     @RequestMapping(path = "/checkpass", method = RequestMethod.POST)
-    public String checkpass(Model model, String applicationDate, String id, String name, String furigana, 
+    public String checkpass(HttpSession session, String applicationDate, String id, String name, String furigana, 
                                 String address, String busRoute, String busPeriod, String busFare, 
                                 String trainRoute, String trainPeriod, String trainFare, String totalFare) {
-        model.addAttribute("applicationDate", applicationDate);
-        model.addAttribute("id", id);
-        model.addAttribute("name", name);
-        model.addAttribute("furigana", furigana);
-        model.addAttribute("address", address);
-        model.addAttribute("busRoute", busRoute);
-        model.addAttribute("busPeriod", busPeriod);
-        model.addAttribute("busFare", busFare);
-        model.addAttribute("trainRoute", trainRoute);
-        model.addAttribute("trainPeriod", trainPeriod);
-        model.addAttribute("trainFare", trainFare);
-        model.addAttribute("totalFare", totalFare);
+        session.setAttribute("applicationDate", applicationDate);
+        session.setAttribute("id", id);
+        session.setAttribute("name", name);
+        session.setAttribute("furigana", furigana);
+        session.setAttribute("address", address);
+        session.setAttribute("busRoute", busRoute);
+        session.setAttribute("busPeriod", busPeriod);
+        session.setAttribute("busFare", busFare);
+        session.setAttribute("trainRoute", trainRoute);
+        session.setAttribute("trainPeriod", trainPeriod);
+        session.setAttribute("trainFare", trainFare);
+        session.setAttribute("totalFare", totalFare);
         return "checkpass";
     }
+
     @RequestMapping(path = "/checktravel", method = RequestMethod.POST)
-    public String checkTravel(Model model, 
+    public String checkTravel(HttpSession session, 
                               String applicationDate, 
                               String id, 
                               String name, 
@@ -126,74 +132,81 @@ public class LoginController {
                               String totalFare, 
                               @RequestParam(value = "transportation", required = false) String[] transportation,
                               @RequestParam(value = "otherText", required = false) String otherText) {
-        // フォームから送信されたデータをModelに追加
-        model.addAttribute("applicationDate", applicationDate);
-        model.addAttribute("id", id);
-        model.addAttribute("name", name);
-        model.addAttribute("furigana", furigana);
-        model.addAttribute("departureDate", departureDate);
-        model.addAttribute("departureStation", departureStation);
-        model.addAttribute("destinationStation", destinationStation);
-        model.addAttribute("totalFare", totalFare);
 
-        // 選択された交通機関をModelに追加
-        model.addAttribute("transportation", transportation);
+        session.setAttribute("applicationDate", applicationDate);
+        session.setAttribute("id", id);
+        session.setAttribute("name", name);
+        session.setAttribute("furigana", furigana);
+        session.setAttribute("departureDate", departureDate);
+        session.setAttribute("departureStation", departureStation);
+        session.setAttribute("destinationStation", destinationStation);
+        session.setAttribute("totalFare", totalFare);
+        session.setAttribute("transportation", transportation);
 
-        // その他の交通機関が入力されている場合は追加
         if (otherText != null && !otherText.trim().isEmpty()) {
-            model.addAttribute("otherText", otherText);
+            session.setAttribute("otherText", otherText);
         } else {
-            model.addAttribute("otherText", null);
+            session.setAttribute("otherText", null);
         }
 
-        // "checktravel"というテンプレートを返す
         return "checktravel";
     }
 
     @RequestMapping(path = "/submitbicycle", method = RequestMethod.POST)
-    public String submitBicycle(String furigana1, String name, String addressFurigana, String address, String commuteRoute, String bicycleUse, String busRoute, Model model) {
+    public String submitBicycle(HttpSession session) {
         return "redirect:/complete";
     }
+
     @RequestMapping(path = "/submit", method = RequestMethod.POST)
-    public String submitResidence(String furigana1, String name, String addressFurigana, String address, String commuteRoute, String bicycleUse, String busRoute) {
-        
+    public String submitResidence(HttpSession session) {
         System.out.println("データが送信されました");
         System.out.printf("フリガナ: %s, 氏名: %s, 住所フリガナ: %s, 住所: %s, 通勤経路: %s, 自転車: %s, バス: %s%n",
-                          furigana1, name, addressFurigana, address, commuteRoute, bicycleUse, busRoute);
-
-
+                          session.getAttribute("furigana1"), session.getAttribute("name"), session.getAttribute("addressFurigana"),
+                          session.getAttribute("address"), session.getAttribute("commuteRoute"), session.getAttribute("bicycleUse"),
+                          session.getAttribute("busRoute"));
         return "redirect:/complete";
     }
+
+    @RequestMapping(path = "/submit2", method = RequestMethod.POST)
+    public String submit2Residence(HttpSession session) {
+        travel travel = new travel();
+        travel.setId(Long.parseLong(session.getAttribute("id").toString()));
+        travel.setApplicationDate(session.getAttribute("applicationDate").toString());
+        travel.setName(session.getAttribute("name").toString());
+        travel.setFurigana(session.getAttribute("furigana").toString());
+        travel.setDepartureDate(session.getAttribute("departureDate").toString());
+        travel.setDepartureStation(session.getAttribute("departureStation").toString());
+        travel.setDestinationStation(session.getAttribute("destinationStation").toString());
+        travel.setTotalFare(Double.parseDouble(session.getAttribute("totalFare").toString()));
+        travel.setOtherText(session.getAttribute("otherText") != null ? session.getAttribute("otherText").toString() : "");
+        TravelRepository.save(travel);
+        return "redirect:/complete";
+    }
+
     @RequestMapping(path = "/sin", method = RequestMethod.POST)
     public String sins() {
         return "sin";
     }
+
     @RequestMapping(path = "/sins", method = RequestMethod.POST)
     public String sin() {
         return "redirect:/sin";
     }
+
     @RequestMapping(path = "/compsubmit", method = RequestMethod.POST)
-    public String compsubmit(Model model) {
-        // ゲストログインの場合の処理を追加
-        // 必要であれば、ゲスト用の情報をModelに追加できます
-        model.addAttribute("message", "入力完了");
-        
+    public String compsubmit(HttpSession session) {
+        session.setAttribute("message", "入力完了");
         return "redirect:/home";
     }
+
     @RequestMapping(path = "/guest", method = RequestMethod.POST)
-    public String guestLogin(Model model) {
-        // ゲストログインの場合の処理を追加
-        // 必要であれば、ゲスト用の情報をModelに追加できます
-        model.addAttribute("message", "ゲストとしてログインしました！");
-        
-        // ゲスト用ダッシュボードに遷移
+    public String guestLogin(HttpSession session) {
+        session.setAttribute("message", "ゲストとしてログインしました！");
         return "redirect:/route2";
     }
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public String processLogin(String id, String password, Model model, HttpSession session) {
-        model.addAttribute("id", id);
-        model.addAttribute("password", password);
+    public String processLogin(String id, String password, HttpSession session) {
         session.setAttribute("id", id);
         session.setAttribute("password", password);
 
@@ -202,7 +215,7 @@ public class LoginController {
         if (user != null && user.getPassword().equals(password)) {
             return "redirect:/home";
         } else {
-            model.addAttribute("message", "ログインに失敗しました");
+            session.setAttribute("message", "ログインに失敗しました");
             return "redirect:/login";
         }
     }

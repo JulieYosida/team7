@@ -11,37 +11,37 @@
 <body>
     <div class="container">
         <h2>入力内容の確認</h2>
-        <form action="/submit" method="post">
+        <form action="/submit2" method="post">
             <dl>
                 <dt>申請日</dt>
-                <dd th:text="${applicationDate}">未入力</dd>
+                <dd th:text="${session.applicationDate}">未入力</dd>
 
                 <dt>ID</dt>
-                <dd th:text="${id}">未入力</dd>
+                <dd th:text="${session.id}">未入力</dd>
 
                 <dt>氏名</dt>
-                <dd th:text="${name}">未入力</dd>
+                <dd th:text="${session.name}">未入力</dd>
 
                 <dt>フリガナ</dt>
-                <dd th:text="${furigana}">未入力</dd>
+                <dd th:text="${session.furigana}">未入力</dd>
 
                 <dt>出発日</dt>
-                <dd th:text="${departureDate}">未入力</dd>
+                <dd th:text="${session.departureDate}">未入力</dd>
 
                 <dt>出発駅</dt>
-                <dd th:text="${departureStation}">未入力</dd>
+                <dd th:text="${session.departureStation}">未入力</dd>
 
                 <dt>出張先最寄り駅</dt>
-                <dd th:text="${destinationStation}">未入力</dd>
+                <dd th:text="${session.destinationStation}">未入力</dd>
 
                 <dt>使用交通機関</dt>
-                <dd th:text="${#strings.arrayJoin(transportation, ', ')}">未入力</dd>
+                <dd th:text="${#strings.arrayJoin(session.transportation, ', ')}">未入力</dd>
 
                 <dt>その他の交通機関</dt>
-                <dd th:text="${otherText}">なし</dd>
+                <dd th:text="${session.otherText}">なし</dd>
 
                 <dt>運賃総額</dt>
-                <dd th:text="${totalFare}">未入力</dd>
+                <dd th:text="${session.totalFare}">未入力</dd>
             </dl>
 
             <div class="buttons">
