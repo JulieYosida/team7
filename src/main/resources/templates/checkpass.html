@@ -1,61 +1,44 @@
-<!DOCTYPE html>
-<html lang="ja">
+<form action="/submit3" method="post"> <!-- ここを /submit2 に変更 -->
+    <dl>
+        <dt>申請日</dt>
+        <dd><span th:text="${applicationDate}">未入力</span></dd>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>入力内容の確認</title>
-    <link rel="stylesheet" href="/css/check.css">
-</head>
+        <dt>ID</dt>
+        <dd><span th:text="${id}">未入力</span></dd>
 
-<body>
-    <div class="container">
-        <h2>入力内容の確認</h2>
-        <form action="/submit" method="post">
-            <dl>
-                <dt>申請日</dt>
-                <dd><span th:text="${applicationDate}">未入力</span></dd>
+        <dt>氏名</dt>
+        <dd><span th:text="${name}">未入力</span></dd>
 
-                <dt>ID</dt>
-                <dd><span th:text="${id}">未入力</span></dd>
+        <dt>フリガナ</dt>
+        <dd><span th:text="${furigana}">未入力</span></dd>
 
-                <dt>氏名</dt>
-                <dd><span th:text="${name}">未入力</span></dd>
+        <dt>現住所</dt>
+        <dd><span th:text="${address}">未入力</span></dd>
 
-                <dt>フリガナ</dt>
-                <dd><span th:text="${furigana}">未入力</span></dd>
+        <dt>バス使用区間</dt>
+        <dd><span th:text="${busRoute}">未入力</span></dd>
 
-                <dt>現住所</dt>
-                <dd><span th:text="${address}">未入力</span></dd>
+        <dt>バス使用期間</dt>
+        <dd><span th:text="${busPeriod}">未入力</span></dd>
 
-                <dt>バス使用区間</dt>
-                <dd><span th:text="${busRoute}">未入力</span></dd>
+        <dt>運賃（バス）</dt>
+        <dd><span th:text="${busFare}">0</span></dd>
 
-                <dt>バス使用期間</dt>
-                <dd><span th:text="${busPeriod}">未入力</span></dd>
+        <dt>電車使用区間</dt>
+        <dd><span th:text="${trainRoute}">未入力</span></dd>
 
-                <dt>運賃（バス）</dt>
-                <dd><span th:text="${busFare}">0</span></dd>
+        <dt>電車使用期間</dt>
+        <dd><span th:text="${trainPeriod}">未入力</span></dd>
 
-                <dt>電車使用区間</dt>
-                <dd><span th:text="${trainRoute}">未入力</span></dd>
+        <dt>運賃（電車）</dt>
+        <dd><span th:text="${trainFare}">0</span></dd>
 
-                <dt>電車使用期間</dt>
-                <dd><span th:text="${trainPeriod}">未入力</span></dd>
+        <dt>運賃総額</dt>
+        <dd><span th:text="${totalFare}">0</span></dd>
+    </dl>
 
-                <dt>運賃（電車）</dt>
-                <dd><span th:text="${trainFare}">0</span></dd>
-
-                <dt>運賃総額</dt>
-                <dd><span th:text="${totalFare}">0</span></dd>
-            </dl>
-
-            <div class="buttons">
-                <button type="button" class="cancel" onclick="history.back()">修正する</button>
-                <button type="submit">送信する</button>
-            </div>
-        </form>
+    <div class="buttons">
+        <button type="button" class="cancel" onclick="history.back()">修正する</button>
+        <button type="submit">送信する</button>
     </div>
-</body>
-
-</html>
+</form>

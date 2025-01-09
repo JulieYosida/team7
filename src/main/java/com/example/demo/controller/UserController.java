@@ -30,6 +30,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity<String> createUser(@RequestBody Users user) {
         userservice.createUser(user.getEmail(), user.getPassword(), user.getName());
+
         return ResponseEntity.ok("User created successfully");
     }
 

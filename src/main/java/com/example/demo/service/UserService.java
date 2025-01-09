@@ -17,9 +17,9 @@ public class UserService {
     private UserRepository userRepository;
 
     // ユーザを作成
-    public void createUser(String email, String password, String name) {
+    public void createUser(String email, String password, String name ,String data) {
         int randomId = generateUniqueRandomId();
-        Users user = new Users(randomId, email, password, name);
+        Users user = new Users(randomId, email, password, name,data);
         userRepository.save(user);
     }
 
