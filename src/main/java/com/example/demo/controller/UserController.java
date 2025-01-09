@@ -29,7 +29,7 @@ public class UserController {
     // ユーザを作成するためのPOSTリクエスト（JSON形式を受け取る）
     @PostMapping
     public ResponseEntity<String> createUser(@RequestBody Users user) {
-        userservice.createUser(user.getEmail(), user.getPassword(), user.getName());
+        userservice.createUser(user.getEmail(), user.getPassword(), user.getName(), null);
 
         return ResponseEntity.ok("User created successfully");
     }
