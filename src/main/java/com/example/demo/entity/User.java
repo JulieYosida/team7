@@ -3,65 +3,39 @@ package com.example.demo.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Data;
 
 @Entity
+@Data
+@Table(name = "user")
 public class User {
 
     @Id
-    private int id;
+    private Integer id;  // ユーザーID (主キー)
 
     @Column(nullable = false, unique = true)
-    private String email;
+    private String email;  // メールアドレス
 
     @Column(nullable = false)
-    private String password;
+    private String password;  // パスワード
 
     @Column(nullable = false)
-    private String name;
+    private String name;  // 名前
+    
+    @Column(nullable = false)
+    private String data;  // データ
 
     public User() {}
 
-    public User(int id, String email, String password, String name) {
+    public User(Integer id, String email, String password, String name ,String data) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.name = name;
+        this.data = data;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "User{id=" + id + ", email='" + email + "', password='" + password + "', name='" + name + "'}";
-    }
+ 
+    // ゲッターとセッターは@Dataで自動生成されます
 }

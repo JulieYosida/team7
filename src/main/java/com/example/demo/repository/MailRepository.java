@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.entity.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface MailRepository extends JpaRepository<User, Integer> {
     User findFirstByEmailIsNotNull();  // 最初に見つかるメールアドレスを取得
 }
