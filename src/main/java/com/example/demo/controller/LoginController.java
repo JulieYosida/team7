@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.demo.entity.User;
+import com.example.demo.entity.Users;
 import com.example.demo.entity.travel;
 import com.example.demo.repository.LoginRepository;
 import com.example.demo.repository.TravelRepository;
@@ -210,7 +210,7 @@ public class LoginController {
         session.setAttribute("id", id);
         session.setAttribute("password", password);
 
-        User user = loginRepository.findById(Integer.parseInt(id)).orElse(null);
+        Users user = loginRepository.findById(Integer.parseInt(id)).orElse(null);
 
         if (user != null && user.getPassword().equals(password)) {
             return "redirect:/home";

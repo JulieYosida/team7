@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.example.demo.entity.User;
+import com.example.demo.entity.Users;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
 
@@ -28,7 +28,7 @@ public class UserController {
 
     // ユーザを作成するためのPOSTリクエスト（JSON形式を受け取る）
     @PostMapping
-    public ResponseEntity<String> createUser(@RequestBody User user) {
+    public ResponseEntity<String> createUser(@RequestBody Users user) {
         userservice.createUser(user.getEmail(), user.getPassword(), user.getName());
         return ResponseEntity.ok("User created successfully");
     }
@@ -36,15 +36,15 @@ public class UserController {
     
     @RequestMapping(path = "/administrator", method = RequestMethod.GET)
 	public String showAttendance(Model model) {
-		List<User> user = userrepository.findAll();
+		List<Users> user = userrepository.findAll();
 		model.addAttribute("user", user);
 		return "administrator";
 	}
 
     // 特定のユーザをIDで取得するためのGETリクエスト
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable int id) {
-        User user = userservice.getUserById(id);
+    public ResponseEntity<Users> getUserById(@PathVariable int id) {
+        Users user = userservice.getUserById(id);
         if (user != null) {
             return ResponseEntity.ok(user);
         } else {

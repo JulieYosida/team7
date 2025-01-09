@@ -7,7 +7,7 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.User;
+import com.example.demo.entity.Users;
 import com.example.demo.repository.UserRepository;
 
 @Service
@@ -19,18 +19,18 @@ public class UserService {
     // ユーザを作成
     public void createUser(String email, String password, String name) {
         int randomId = generateUniqueRandomId();
-        User user = new User(randomId, email, password, name);
+        Users user = new Users(randomId, email, password, name);
         userRepository.save(user);
     }
 
     // すべてのユーザを取得
-    public List<User> getAllUsers() {
+    public List<Users> getAllUsers() {
         return userRepository.findAll();
     }
 
     // ユーザIDで検索
-    public User getUserById(int id) {
-        Optional<User> user = userRepository.findById(id);
+    public Users getUserById(int id) {
+        Optional<Users> user = userRepository.findById(id);
         return user.orElse(null);
     }
 

@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 @Entity
-public class User {
+public class Users {
 
     @Id
     private int id;
@@ -19,9 +19,9 @@ public class User {
     @Column(nullable = false)
     private String name;
 
-    public User() {}
+    public Users() {}
 
-    public User(int id, String email, String password, String name) {
+    public Users(int id, String email, String password, String name) {
         this.id = id;
         this.email = email;
         this.password = password;
