@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.entity.Pass;
 import com.example.demo.entity.Users;
 import com.example.demo.entity.travel;
 import com.example.demo.repository.LoginRepository;
+import com.example.demo.repository.PassRepository;
 import com.example.demo.repository.TravelRepository;
 
 import jakarta.servlet.http.HttpSession;
@@ -22,6 +24,9 @@ public class LoginController {
     
     @Autowired
     TravelRepository TravelRepository;
+    
+    @Autowired
+    PassRepository PassRepository;
 
     @RequestMapping(path = "/login", method = RequestMethod.GET)
     public String showLoginForm() {
@@ -102,21 +107,31 @@ public class LoginController {
     }
 
     @RequestMapping(path = "/checkpass", method = RequestMethod.POST)
-    public String checkpass(HttpSession session, String applicationDate, String id, String name, String furigana, 
-                                String address, String busRoute, String busPeriod, String busFare, 
-                                String trainRoute, String trainPeriod, String trainFare, String totalFare) {
-        session.setAttribute("applicationDate", applicationDate);
-        session.setAttribute("id", id);
+    public String checkpass(HttpSession session, 
+    						String id,
+    						String application_date, 
+    						String name, 
+    						String furigana,
+                            String address, 
+                            String bus_route, 
+                            String bus_period, 
+                            String bus_fare, 
+                            String train_route, 
+                            String train_period, 
+                            String train_fare, 
+                            String total_fare) 
+    {	session.setAttribute("id", id);
+        session.setAttribute("application_date", application_date);
         session.setAttribute("name", name);
         session.setAttribute("furigana", furigana);
         session.setAttribute("address", address);
-        session.setAttribute("busRoute", busRoute);
-        session.setAttribute("busPeriod", busPeriod);
-        session.setAttribute("busFare", busFare);
-        session.setAttribute("trainRoute", trainRoute);
-        session.setAttribute("trainPeriod", trainPeriod);
-        session.setAttribute("trainFare", trainFare);
-        session.setAttribute("totalFare", totalFare);
+        session.setAttribute("bus_route", bus_route);
+        session.setAttribute("bus_period", bus_period);
+        session.setAttribute("bus_fare", bus_fare);
+        session.setAttribute("train_route", train_route);
+        session.setAttribute("train_period", train_period);
+        session.setAttribute("train_fare", train_fare);
+        session.setAttribute("total_fare", total_fare);
         return "checkpass";
     }
 
@@ -170,7 +185,6 @@ public class LoginController {
     @RequestMapping(path = "/submit2", method = RequestMethod.POST)
     public String submit2Residence(HttpSession session) {
         travel travel = new travel();
-        travel.setId(Long.parseLong(session.getAttribute("id").toString()));
         travel.setApplicationDate(session.getAttribute("applicationDate").toString());
         travel.setName(session.getAttribute("name").toString());
         travel.setFurigana(session.getAttribute("furigana").toString());
@@ -182,6 +196,71 @@ public class LoginController {
         TravelRepository.save(travel);
         return "redirect:/complete";
     }
+    
+    @RequestMapping(path = "/submitPass", method = RequestMethod.POST)
+    public String submitPass(HttpSession session) {
+        Pass pass = new Pass();
+
+        pass.setApplicationDate(
+            session.getAttribute("application_date") != null 
+            ? session.getAttribute("application_date").toString() 
+            : "未入力");
+
+        pass.setName(
+            session.getAttribute("name") != null 
+            ? session.getAttribute("name").toString() 
+            : "未入力");
+
+        pass.setFurigana(
+            session.getAttribute("furigana") != null 
+            ? session.getAttribute("furigana").toString() 
+            : "未入力");
+
+        pass.setAddress(
+            session.getAttribute("address") != null 
+            ? session.getAttribute("address").toString() 
+            : "未入力");
+
+        pass.setBusRoute(
+            session.getAttribute("bus_route") != null 
+            ? session.getAttribute("bus_route").toString() 
+            : "未入力");
+
+        pass.setBusPeriod(
+            session.getAttribute("bus_period") != null 
+            ? session.getAttribute("bus_period").toString() 
+            : "未入力");
+
+        pass.setBusFare(
+            session.getAttribute("bus_fare") != null 
+            ? session.getAttribute("bus_fare").toString() 
+            : "未入力");
+
+        pass.setTrainRoute(
+            session.getAttribute("train_route") != null 
+            ? session.getAttribute("train_route").toString() 
+            : "未入力");
+
+        pass.setTrainPeriod(
+            session.getAttribute("train_period") != null 
+            ? session.getAttribute("train_period").toString() 
+            : "未入力");
+
+        pass.setTrainFare(
+            session.getAttribute("train_fare") != null 
+            ? session.getAttribute("train_fare").toString() 
+            : "未入力");
+
+        pass.setTotalFare(
+            session.getAttribute("total_fare") != null 
+            ? session.getAttribute("total_fare").toString() 
+            : "未入力");
+
+        PassRepository.save(pass);
+
+        return "redirect:/complete";
+    }
+
 
     @RequestMapping(path = "/sin", method = RequestMethod.POST)
     public String sins() {
