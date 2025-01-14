@@ -8,18 +8,18 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <script>
         function calculateTotalFare() {
-            const busFare = parseFloat(document.getElementById('busFare').value) || 0;
-            const trainFare = parseFloat(document.getElementById('trainFare').value) || 0;
-            const totalFare = busFare + trainFare;
-            document.getElementById('totalFare').value = totalFare.toFixed(2);
+            const bus_fare = parseFloat(document.getElementById('bus_fare').value) || 0;
+            const train_fare = parseFloat(document.getElementById('train_fare').value) || 0;
+            const total_fare = bus_fare + train_fare;
+            document.getElementById('total_fare').value = total_fare.toFixed(2);
         }
 
         function validateForm(event) {
-            const busFare = document.getElementById('busFare').value;
-            const trainFare = document.getElementById('trainFare').value;
+            const bus_fare = document.getElementById('bus_fare').value;
+            const train_fare = document.getElementById('train_fare').value;
 
             // バスか電車のどちらかが入力されているか確認
-            if (!busFare && !trainFare) {
+            if (!bus_fare && !train_fare) {
                 alert("バスまたは電車のどちらかの運賃を入力してください。");
                 event.preventDefault(); // フォーム送信を中止
             }
@@ -41,11 +41,8 @@
     </header>
 
     <form action="/checkpass" method="post" onsubmit="validateForm(event)">
-        <label for="applicationDate">申請日</label>
-        <input type="date" id="applicationDate" name="applicationDate" required>
-
-        <label for="id">ID</label>
-        <input type="text" id="id" name="id" required>
+        <label for="application_date">申請日</label>
+        <input type="date" id="application_date" name="application_date" required>
 
         <label for="name">氏名</label>
         <input type="text" id="name" name="name" required>
@@ -56,26 +53,26 @@
         <label for="address">現住所</label>
         <input type="text" id="address" name="address" required>
 
-        <label for="busRoute">バス使用区間</label>
-        <input type="text" id="busRoute" name="busRoute">
+        <label for="bus_route">バス使用区間</label>
+        <input type="text" id="bus_route" name="bus_route">
 
-        <label for="busPeriod">バス使用期間</label>
-        <input type="text" id="busPeriod" name="busPeriod">
+        <label for="bus_period">バス使用期間</label>
+        <input type="text" id="bus_period" name="bus_period">
 
-        <label for="busFare">運賃（バス）</label>
-        <input type="number" id="busFare" name="busFare" step="0.01" oninput="calculateTotalFare()">
+        <label for="bus_fare">運賃（バス）</label>
+        <input type="number" id="bus_fare" name="bus_fare" step="0.01" oninput="calculateTotalFare()">
 
-        <label for="trainRoute">電車使用区間</label>
-        <input type="text" id="trainRoute" name="trainRoute">
+        <label for="train_route">電車使用区間</label>
+        <input type="text" id="train_route" name="train_route">
 
-        <label for="trainPeriod">電車使用期間</label>
-        <input type="text" id="trainPeriod" name="trainPeriod">
+        <label for="train_period">電車使用期間</label>
+        <input type="text" id="train_period" name="train_period">
 
-        <label for="trainFare">運賃（電車）</label>
-        <input type="number" id="trainFare" name="trainFare" step="0.01" oninput="calculateTotalFare()">
+        <label for="train_fare">運賃（電車）</label>
+        <input type="number" id="train_fare" name="train_fare" step="0.01" oninput="calculateTotalFare()">
 
-        <label for="totalFare">運賃総額</label>
-        <input type="text" id="totalFare" name="totalFare" class="total" readonly>
+        <label for="total_fare">運賃総額</label>
+        <input type="text" id="total_fare" name="total_fare" class="total" readonly>
 
         <button type="submit">入力内容確認へ</button>
     </form>

@@ -13,11 +13,16 @@ import com.example.demo.entity.travel;
 import com.example.demo.repository.LoginRepository;
 import com.example.demo.repository.PassRepository;
 import com.example.demo.repository.TravelRepository;
+import com.example.demo.service.MailService;
 
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
+	
+
+    @Autowired
+    private MailService mailService;
 
     @Autowired
     LoginRepository loginRepository;
@@ -132,6 +137,8 @@ public class LoginController {
         session.setAttribute("train_period", train_period);
         session.setAttribute("train_fare", train_fare);
         session.setAttribute("total_fare", total_fare);
+        
+        
         return "checkpass";
     }
 
@@ -257,8 +264,18 @@ public class LoginController {
             : "未入力");
 
         PassRepository.save(pass);
+        String to = "shitianzun28@gmail.com";  // 宛先（固定）
+        String subject = "新しい申請が届きました";  // 件名
+        String text = "新しい申請が届きました。内容をご確認ください。";  // 本文
 
+        // メール送信
+        mailService.sendMail(to, subject, text);
+
+        
+        System.out.println("メール送信が完了しました。");
+        
         return "redirect:/complete";
+        
     }
 
 
