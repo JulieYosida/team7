@@ -192,6 +192,7 @@ public class LoginController {
     @RequestMapping(path = "/submit2", method = RequestMethod.POST)
     public String submit2Residence(HttpSession session) {
         travel travel = new travel();
+        travel.setId(Long.parseLong(session.getAttribute("id").toString()));
         travel.setApplicationDate(session.getAttribute("applicationDate").toString());
         travel.setName(session.getAttribute("name").toString());
         travel.setFurigana(session.getAttribute("furigana").toString());
