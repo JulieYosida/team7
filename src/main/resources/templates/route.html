@@ -1,145 +1,225 @@
 <!DOCTYPE html>
-<html lang="ja">
-
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>経路探索モック</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <title>駅候補検索 & 経路検索結果</title>
     <style>
-        
-
-
-        h1 {
-            text-align: center;
-            color: #333;
-            margin: 20px 0;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
         }
 
-        #directions {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .station-list {
+            margin-top: 20px;
         }
 
-        .input-group {
-            margin-bottom: 15px;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #555;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        button#route {
-            display: block;
-            width: 100%;
+        .station-item {
             padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
         }
 
-        button#route:hover {
-            background-color: #45a049;
+        .station-item:hover {
+            background-color: #f0f0f0;
         }
 
-        #map {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            background: #e9ecef;
-            border-radius: 8px;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            border: 1px solid #ccc;
+            white-space: nowrap;
+            padding: 8px;
+        }
+
+        .route-list th {
             text-align: center;
-            font-size: 16px;
-            color: #666;
+            background-color: #f2f2f2;
         }
 
-        #route-output {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
+        .route-name {
+            text-align: left;
         }
 
-        #route-info {
-            font-weight: bold;
-            color: #333;
+        .route-name-col {
+            width: 70%;
         }
+
+        .start-station-col, 
+        .end-station-col, 
+        .mid-station-col {
+            width: 10%;
+        }
+
+        .display-route {
+            white-space: pre-line;
+        }
+
+        .station {
+            text-align: left;
+            padding-left: 10px;
+        }
+
+        .route-line {
+            text-align: right;
+            padding-right: 10px;
+            background-color: #e6f7ff;
+            border-radius: 5px;
+            margin: 2px 0;
+        }
+
+        .start-station {
+            background-color: #d9f7be;
+        }
+
+        .mid-station {
+            background-color: #ffe58f;
+        }
+
+        .end-station {
+            background-color: #ffccc7;
+        }
+
     </style>
 </head>
-
 <body>
 
-    <div class="navbar">
-       <a th:href="@{/route}"class="active">経路探索</a>
-            <a th:href="@{/applytravel}">出張代申請</a>
-            <a th:href="@{/applypass}">定期代申請</a>
-            <a th:href="@{/applybicycle}">自転車申請</a>
-            <a th:href="@{/residence}">住居・身上登録</a>
-    </div>
+    <!-- 駅候補検索フォーム -->
+    <section>
+        <h2>駅候補検索</h2>
 
-    <h1>経路探索</h1>
+        <label for="fromStation">出発駅:</label>
+        <input type="text" id="fromStation" name="fromStation" oninput="searchStation('fromStation', 'fromList', 'fromCode')" required>
+        <div id="fromList" class="station-list"></div>
 
-    <div id="directions">
-        <div class="input-group">
-            <label for="start">出発地:</label>
-            <input type="text" id="start" placeholder="例: 東京駅">
+        <label for="toStation">到着駅:</label>
+        <input type="text" id="toStation" name="toStation" oninput="searchStation('toStation', 'toList', 'toCode')" required>
+        <div id="toList" class="station-list"></div>
+
+        <form action="/search-route" method="post" onsubmit="return validateForm();">
+    <input type="hidden" id="fromCode" name="fromCode">
+    <input type="hidden" id="toCode" name="toCode">
+
+    <label for="departureTime">出発時間:</label>
+    <input type="time" id="departureTime" name="departureTime" required>
+
+    <button type="submit">経路検索を実行</button>
+</form>
+    </section>
+
+    <!-- 経路検索結果 -->
+    <section th:if="${coursList2}">
+        <h2>経路検索結果</h2>
+        <div th:if="${error}">
+            <p style="color:red;" th:text="${error}"></p>
         </div>
-        <div class="input-group">
-            <label for="end">目的地:</label>
-            <input type="text" id="end" placeholder="例: 大阪駅">
-        </div>
-        <button id="route">経路を表示</button>
-    </div>
 
-    <div id="map">ここに地図が表示されます</div>
-
-    <div id="route-output">
-        <span id="route-info">ここに経路の詳細が表示されます</span>
-    </div>
-
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>運賃</th>
+                    <th>定期1ヶ月</th>
+                    <th>定期3ヶ月</th>
+                    <th>定期6ヶ月</th>
+                    <th>経路概要</th>
+                    <th>路線一覧</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="course, iterStat : ${coursList2}">
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td th:text="${course['FareSummary']}"></td>
+                    <td th:text="${course['Teiki1Summary']}"></td>
+                    <td th:text="${course['Teiki3Summary']}"></td>
+                    <td th:text="${course['Teiki6Summary']}"></td>
+                    <td class="display-route">
+                        <span th:text="${course['displayRoute']}"></span>
+                    </td>
+                    <td>
+                        <table class="route-list">
+                            <thead>
+                                <tr>
+                                    <th class="route-name-col">路線名</th>
+                                    <th class="start-station-col">始発駅</th>
+                                    <th class="mid-station-col">途中駅</th>
+                                    <th class="end-station-col">終着駅</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="line : ${course['LineList']}">
+                                    <td class="route-name" th:text="${line['LineName']} ?: ''"></td>
+                                    <td class="start-station" th:text="${line['FromStationName']} ?: ''"></td>
+                                    <td class="mid-station" th:text="${line['StationName']} ?: ''"></td>
+                                    <td class="end-station" th:text="${line['ToStationName']} ?: ''"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
     <script>
-        document.getElementById('route').addEventListener('click', function () {
-            const start = document.getElementById('start').value;
-            const end = document.getElementById('end').value;
-
-            if (start && end) {
-                fetch(`http://localhost:8080/api/route?start=${start}&end=${end}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('route-info').textContent = `経路情報: ${data}`;
-                        document.getElementById('map').style.backgroundColor = "#c0ffc0";  // 地図のエリアをハイライト
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert("経路の取得に失敗しました。");
-                    });
-            } else {
-                alert("出発地と目的地を入力してください！");
+        async function searchStation(inputId, listId, codeId) {
+            const stationName = document.getElementById(inputId).value.trim();
+            if (!stationName) {
+                alert("駅名を入力してください。");
+                return;
             }
-        });
+
+            const listElement = document.getElementById(listId);
+            listElement.innerHTML = "検索中...";
+
+            try {
+                const response = await fetch(`/search-station`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: new URLSearchParams({ stationName }),
+                });
+
+                if (!response.ok) {
+                    throw new Error("リクエストに失敗しました。");
+                }
+
+                const stations = await response.json();
+                listElement.innerHTML = "";
+
+                if (stations.length > 0) {
+                    stations.forEach(station => {
+                        const item = document.createElement("div");
+                        item.className = "station-item";
+                        item.textContent = `${station.Name} (${station.code})`;
+                        item.onclick = () => {
+                            document.getElementById(inputId).value = station.Name;
+                            document.getElementById(codeId).value = station.code;
+                            listElement.innerHTML = "";
+                        };
+                        listElement.appendChild(item);
+                    });
+                } else {
+                    listElement.innerHTML = "<div>該当する駅が見つかりません。</div>";
+                }
+            } catch (error) {
+                console.error("駅候補取得エラー:", error);
+                listElement.innerHTML = error.message;
+            }
+        }
+
+        function validateForm() {
+            const fromCode = document.getElementById("fromCode").value;
+            const toCode = document.getElementById("toCode").value;
+
+            if (!fromCode || !toCode) {
+                alert("出発駅と到着駅を選択してください。");
+                return false;
+            }
+
+            return true;
+        }
     </script>
-
 </body>
-
 </html>

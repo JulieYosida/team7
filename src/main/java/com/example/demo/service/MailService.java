@@ -14,7 +14,6 @@ public class MailService {
     public void sendMail(String to, String subject, String text) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("kokuri_zoom4@itc.ac.jp");  // 送信元（固定）
             message.setTo(to);  // 宛先（固定）
             message.setSubject(subject);  // 件名
             message.setText(text);  // 本文

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>駅候補検索</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .station-list {
+            margin-top: 20px;
+        }
+        .station-item {
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+        .station-item:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+    <script>
+        async function searchStation(inputId, listId, codeId) {
+            const stationName = document.getElementById(inputId).value.trim();
+            if (!stationName) {
+                alert("駅名を入力してください。");
+                return;
+            }
+
+            const listElement = document.getElementById(listId);
+            listElement.innerHTML = "検索中...";
+
+            try {
+                const response = await fetch(`/search-station`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: new URLSearchParams({ stationName }),
+                });
+
+                if (!response.ok) {
+                    throw new Error("リクエストに失敗しました。");
+                }
+
+                const stations = await response.json();
+                listElement.innerHTML = "";
+
+                if (stations.length > 0) {
+                    stations.forEach(station => {
+                        const item = document.createElement("div");
+                        item.className = "station-item";
+                        item.textContent = `${station.Name} (${station.code})`;
+                        item.onclick = () => {
+                            document.getElementById(inputId).value = station.Name;
+                            document.getElementById(codeId).value = station.code;
+                            listElement.innerHTML = ""; // 候補をクリア
+                        };
+                        listElement.appendChild(item);
+                    });
+                } else {
+                    listElement.innerHTML = "<div>該当する駅が見つかりません。</div>";
+                }
+            } catch (error) {
+                console.error("駅候補取得エラー:", error);
+                listElement.innerHTML = error.message;
+            }
+        }
+
+        function validateForm() {
+            const fromCode = document.getElementById("fromCode").value;
+            const toCode = document.getElementById("toCode").value;
+
+            if (!fromCode || !toCode) {
+                alert("出発駅と到着駅を選択してください。");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <h1>駅候補検索</h1>
+
+    <!-- 出発駅入力 -->
+    <label for="fromStation">出発駅:</label>
+    <input type="text" id="fromStation" name="fromStation" oninput="searchStation('fromStation', 'fromList', 'fromCode')" required>
+    <div id="fromList" class="station-list"></div>
+
+    <!-- 到着駅入力 -->
+    <label for="toStation">到着駅:</label>
+    <input type="text" id="toStation" name="toStation" oninput="searchStation('toStation', 'toList', 'toCode')" required>
+    <div id="toList" class="station-list"></div>
+
+    <br><br>
+
+    <!-- 経路検索フォーム -->
+    <form action="/routeResult" method="post" onsubmit="return validateForm();">
+        <input type="hidden" id="fromCode" name="fromCode">
+        <input type="hidden" id="toCode" name="toCode">
+
+        <!-- 出発時間 -->
+        <label for="departureTime">出発時間:</label>
+        <input type="time" id="departureTime" name="departureTime" required>
+
+        <button type="submit">経路検索を実行</button>
+    </form>
+</body>
+</html>
