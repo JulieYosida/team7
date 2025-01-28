@@ -146,6 +146,7 @@ public class RouteController {
                 map1.put("LineList", retLine);
             });
 
+            
             model.addAttribute("coursList2", coursList2);
 
         } catch (Exception e) {
