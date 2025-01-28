@@ -18,6 +18,7 @@ public class MailService {
             message.setSubject(subject);  // 件名
             message.setText(text);  // 本文
 
+            
             javaMailSender.send(message);  // メール送信
             System.out.println("メールが送信されました。");
         } catch (Exception e) {
