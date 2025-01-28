@@ -15,3 +15,4 @@ public class MailForm {
 	@Email
 	private String email;
 }
+
