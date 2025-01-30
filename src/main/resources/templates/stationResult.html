@@ -81,6 +81,16 @@
     </script>
 </head>
 <body>
+	<header>
+		<!-- ナビゲーションバー -->
+    <div class="navbar">
+            <a th:href="@{/route}">経路探索</a>
+            <a th:href="@{/applytravel}"class="active">出張代申請</a>
+            <a th:href="@{/applypass}">定期代申請</a>
+            <a th:href="@{/applybicycle}">自転車申請</a>
+            <a th:href="@{/residence}">住居・身上登録</a>
+        </div>
+	</header>
     <h1>駅候補検索</h1>
 
     <!-- 出発駅入力 -->

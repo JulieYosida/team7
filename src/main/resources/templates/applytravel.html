@@ -88,10 +88,10 @@
         <input type="date" id="departureDate" name="departureDate" required>
 
         <label for="departureStation">出発駅</label>
-        <input type="text" id="departureStation" name="departureStation" required>
+        <input type="text" id="departureStation" name="departureStation" th:value="${departureStation}" required>
 
         <label for="destinationStation">出張先最寄り駅</label>
-        <input type="text" id="destinationStation" name="destinationStation" required>
+        <input type="text" id="destinationStation" name="destinationStation" th:value="${destinationStation}" required>
 
         <label>使用交通機関</label>
         <div class="checkbox-group">
@@ -123,8 +123,8 @@
         </div>
 
         <label for="totalFare">運賃総額</label>
-        <input type="number" id="totalFare" name="totalFare" step="0.01" required>
-
+        <input type="number" id="totalFare" name="totalFare" th:value="${totalFare}" step="0.01" required>
+<h5>※往復の料金</h5>
         <button type="submit">入力内容確認へ</button>
     </form>
 

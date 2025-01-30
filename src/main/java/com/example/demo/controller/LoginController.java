@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,7 +63,14 @@ public class LoginController {
     }
 
     @RequestMapping(path = "/applytravel", method = RequestMethod.GET)
-    public String applytravel() {
+    public String applytravel(HttpSession session, Model model) {
+    	String departureStation = session.getAttribute("departureStation").toString();
+    	String destinationStation = session.getAttribute("destinationStation").toString();
+    	String FareSummary = session.getAttribute("FareSummary").toString();
+    	model.addAttribute("departureStation", departureStation);
+    	model.addAttribute("destinationStation", destinationStation);
+    	model.addAttribute("totalFare", Integer.parseInt(FareSummary)*2);
+    	
         return "applytravel";
     }
 
@@ -82,6 +90,35 @@ public class LoginController {
         session.setAttribute("busRoute", busRoute);
         return "checkresidence";
     }
+    
+    @RequestMapping(path = "/saveToSession", method = RequestMethod.POST)
+    public String saveToSession(@RequestParam String FareSummary, 
+            @RequestParam String Teiki1Summary, 
+            @RequestParam String Teiki3Summary, 
+            @RequestParam String Teiki6Summary, 
+            @RequestParam String displayRoute, 
+            HttpSession session,
+            Model model) {
+
+// 出発地点と到着地点を抽出
+String[] stations = displayRoute.split("--"); // "駅1→駅2→駅3" という形式を想定
+String departureStation = stations.length > 0 ? stations[0] : ""; // 最初の駅
+String destinationStation = stations.length > 1 ? stations[stations.length - 1] : ""; // 最後の駅
+
+// セッションに保存
+session.setAttribute("FareSummary", FareSummary);
+session.setAttribute("Teiki1Summary", Teiki1Summary);
+session.setAttribute("Teiki3Summary", Teiki3Summary);
+session.setAttribute("Teiki6Summary", Teiki6Summary);
+session.setAttribute("displayRoute", displayRoute);
+session.setAttribute("departureStation", departureStation);
+session.setAttribute("destinationStation", destinationStation);
+
+
+System.out.println(departureStation);
+System.out.println(destinationStation);
+return "redirect:/applytravel";
+}
 
     @RequestMapping(path = "/checkbicycle", method = RequestMethod.POST)
     public String checkBicycle(String applicationDate, String employeeNumber, String name, String nameFurigana,
@@ -124,8 +161,17 @@ public class LoginController {
                             String train_route, 
                             String train_period, 
                             String train_fare, 
-                            String total_fare) 
-    {	session.setAttribute("id", id);
+                            String total_fare,
+                            Model model) 
+    {	
+    	String departureStation = session.getAttribute("departureStation").toString();
+    	String destinationStation = session.getAttribute("destinationStation").toString();
+    	
+    	model.addAttribute("departureStation", departureStation);
+    	model.addAttribute("destinationStation", destinationStation);
+    	
+    	
+    	session.setAttribute("id", id);
         session.setAttribute("application_date", application_date);
         session.setAttribute("name", name);
         session.setAttribute("furigana", furigana);

@@ -84,8 +84,20 @@
         }
 
     </style>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    
 </head>
 <body>
+	<header>
+		<!-- ナビゲーションバー -->
+    <div class="navbar">
+            <a th:href="@{/route}">経路探索</a>
+            <a th:href="@{/applytravel}"class="active">出張代申請</a>
+            <a th:href="@{/applypass}">定期代申請</a>
+            <a th:href="@{/applybicycle}">自転車申請</a>
+            <a th:href="@{/residence}">住居・身上登録</a>
+        </div>
+	</header>
 
     <!-- 駅候補検索フォーム -->
     <section>
@@ -130,37 +142,49 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="course, iterStat : ${coursList2}">
-                    <td th:text="${iterStat.index + 1}"></td>
-                    <td th:text="${course['FareSummary']}"></td>
-                    <td th:text="${course['Teiki1Summary']}"></td>
-                    <td th:text="${course['Teiki3Summary']}"></td>
-                    <td th:text="${course['Teiki6Summary']}"></td>
-                    <td class="display-route">
-                        <span th:text="${course['displayRoute']}"></span>
-                    </td>
-                    <td>
-                        <table class="route-list">
-                            <thead>
-                                <tr>
-                                    <th class="route-name-col">路線名</th>
-                                    <th class="start-station-col">始発駅</th>
-                                    <th class="mid-station-col">途中駅</th>
-                                    <th class="end-station-col">終着駅</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="line : ${course['LineList']}">
-                                    <td class="route-name" th:text="${line['LineName']} ?: ''"></td>
-                                    <td class="start-station" th:text="${line['FromStationName']} ?: ''"></td>
-                                    <td class="mid-station" th:text="${line['StationName']} ?: ''"></td>
-                                    <td class="end-station" th:text="${line['ToStationName']} ?: ''"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-            </tbody>
+    <tr th:each="course, iterStat : ${coursList2}">
+        <td th:text="${iterStat.index + 1}"></td>
+        <td th:text="${course['FareSummary']}"></td>
+        <td th:text="${course['Teiki1Summary']}"></td>
+        <td th:text="${course['Teiki3Summary']}"></td>
+        <td th:text="${course['Teiki6Summary']}"></td>
+        <td class="display-route">
+            <span th:text="${course['displayRoute']}"></span>
+        </td>
+        <td>
+            <table class="route-list">
+                <thead>
+                    <tr>
+                        <th class="route-name-col">路線名</th>
+                        <th class="start-station-col">始発駅</th>
+                        <th class="mid-station-col">途中駅</th>
+                        <th class="end-station-col">終着駅</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="line : ${course['LineList']}">
+                        <td class="route-name" th:text="${line['LineName']} ?: ''"></td>
+                        <td class="start-station" th:text="${line['FromStationName']} ?: ''"></td>
+                        <td class="mid-station" th:text="${line['StationName']} ?: ''"></td>
+                        <td class="end-station" th:text="${line['ToStationName']} ?: ''"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+       <td>
+    <form action="/saveToSession" method="post">
+        <input type="hidden" name="FareSummary" th:value="${course['FareSummary']}">
+        <input type="hidden" name="Teiki1Summary" th:value="${course['Teiki1Summary']}">
+        <input type="hidden" name="Teiki3Summary" th:value="${course['Teiki3Summary']}">
+        <input type="hidden" name="Teiki6Summary" th:value="${course['Teiki6Summary']}">
+        <input type="hidden" name="displayRoute" th:value="${course['displayRoute']}">
+        <button type="submit">出張代申請</button>
+    </form>
+</td>
+
+    </tr>
+</tbody>
+
         </table>
     </section>
     <script>
@@ -220,6 +244,26 @@
 
             return true;
         }
+        function saveAndRedirect(button) {
+    // クリックされたボタンの親行 (tr) を取得
+    const row = button.closest("tr");
+    
+    // 各セルのデータを取得
+    const data = {
+        fare: row.cells[1].innerText,
+        teiki1: row.cells[2].innerText,
+        teiki3: row.cells[3].innerText,
+        teiki6: row.cells[4].innerText,
+        route: row.cells[5].innerText
+    };
+
+    // sessionStorage に保存
+    sessionStorage.setItem("selectedRoute", JSON.stringify(data));
+
+    // applypass に遷移
+    window.location.href = "/applypass";
+}
+
     </script>
 </body>
 </html>
