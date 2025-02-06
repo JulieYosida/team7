@@ -15,34 +15,34 @@
         <form action="/submitbicycle" method="post">
             <dl>
                 <dt>申請日</dt>
-                <dd><span th:text="${applicationDate}"></span></dd>
+                <dd><span th:text="${session.applicationDate}"></span></dd>
 
                 <dt>社員番号</dt>
-                <dd><span th:text="${employeeNumber}"></span></dd>
+                <dd><span th:text="${session.employeeNumber}"></span></dd>
 
                 <dt>氏名</dt>
-                <dd><span th:text="${name}"></span></dd>
+                <dd><span th:text="${session.name}"></span></dd>
 
                 <dt>フリガナ</dt>
-                <dd><span th:text="${nameFurigana}"></span></dd>
+                <dd><span th:text="${session.nameFurigana}"></span></dd>
 
                 <dt>部署</dt>
-                <dd><span th:text="${department}"></span></dd>
+                <dd><span th:text="${session.department}"></span></dd>
 
                 <dt>住所</dt>
-                <dd><span th:text="${address}"></span></dd>
+                <dd><span th:text="${session.address}"></span></dd>
 
                 <dt>補助金額</dt>
-                <dd><span th:text="${subsidyAmount}"></span></dd>
+                <dd><span th:text="${session.subsidyAmount}"></span></dd>
 
                 <dt>駐輪場契約証明書</dt>
                 <dd>
-                    <a th:href="@{/uploads/}+${parkingProof}" target="_blank">駐輪場契約証明書を見る</a>
+                    <img th:src="${'data:image/png;base64,' + session.parkingProofPath}">
                 </dd>
 
                 <dt>自転車保険証明書</dt>
                 <dd>
-                    <a th:href="@{/uploads/}+${insuranceProof}" target="_blank">自転車保険証明書を見る</a>
+                    <img th:src="${'data:image/png;base64,' + session.insuranceProofPath}">
                 </dd>
             </dl>
 
