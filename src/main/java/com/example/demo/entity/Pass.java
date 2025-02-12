@@ -37,6 +37,10 @@ private String train_period;
 private String train_fare;
 @Column(name = "total_fare")
 private String total_fare;
+@Column(name = "employee_number")
+private int employee_number;
+
+
 public Long getId() {
 	return id;
 }
@@ -109,6 +113,12 @@ public String getTotalFare() {
 }
 public void setTotalFare(String totalFare) {
 	this.total_fare = totalFare;
+}
+public int getEmployeeNumber() {
+    return employee_number;
+}
+public void setEmployeeNumber(int employeeNumber) {
+	this.employee_number = employeeNumber;
 }
 
 

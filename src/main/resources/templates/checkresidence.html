@@ -14,25 +14,28 @@
         <form action="/submit" method="post">
             <dl>
                 <dt>フリガナ</dt>
-                <dd><span th:text="${furigana1}"></span></dd>
+                <dd><span th:text="${session.furigana}"></span></dd>
 
                 <dt>氏名</dt>
-                <dd><span th:text="${name}"></span></dd>
+                <dd><span th:text="${session.name}"></span></dd>
+                
+                <dt>社員番号</dt>
+                <dd><span th:text="${session.employeeNumber}"></span></dd>
+
+				<dt>住所</dt>
+                <dd><span th:text="${session.address}"></span></dd>
 
                 <dt>住所フリガナ</dt>
-                <dd><span th:text="${addressFurigana}"></span></dd>
-
-                <dt>住所</dt>
-                <dd><span th:text="${address}"></span></dd>
+                <dd><span th:text="${session.addressFurigana}"></span></dd>
 
                 <dt>通勤経路</dt>
-                <dd><span th:text="${commuteRoute}"></span></dd>
+                <dd><span th:text="${session.commuteRoute}"></span></dd>
 
                 <dt>自転車使用希望</dt>
-                <dd><span th:text="${bicycleUse}"></span></dd>
+                <dd><span th:text="${session.bicycleUse}"></span></dd>
 
                 <dt>バス使用経路</dt>
-                <dd><span th:text="${busRoute}"></span></dd>
+                <dd><span th:text="${session.busRoute}"></span></dd>
             </dl>
 
             <div class="buttons">
